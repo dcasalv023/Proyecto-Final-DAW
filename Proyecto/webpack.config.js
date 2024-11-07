@@ -22,6 +22,12 @@ Encore
      */
     .addEntry('app', './assets/app.js')
 
+    // Copy images from assets to the build directory
+    .copyFiles({
+        from: './assets/images',
+        to: 'images/[path][name].[hash:8].[ext]', // Esto asegura nombres únicos con hashes
+    })
+
     // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
     .splitEntryChunks()
 
