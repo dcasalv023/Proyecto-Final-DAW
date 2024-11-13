@@ -1,3 +1,6 @@
-_security_logout:
-    resource: security.route_loader.logout
-    type: service
+security:
+    providers:
+        app_user_provider:
+            entity:
+                class: App\Entity\Usuario
+                property: email # Campo único para identificar al usuario
