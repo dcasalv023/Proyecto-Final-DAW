@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Registro{% endblock %}
+
+{% block body %}
+<h1>Registro</h1>
+
+<form method="POST">
+    <label for="email">Email:</label>
+    <input type="email" name="email" required><br>
+
+    <label for="password">Contraseña:</label>
+    <input type="password" name="password" required><br>
+
+    <label for="role">Rol:</label>
+    <select name="role" required>
+        <option value="USER">Usuario</option>
+        <option value="ADMIN">Administrador</option>
+    </select><br>
+
+    <button type="submit">Registrar</button>
+</form>
+
+{% endblock %}

@@ -2,15 +2,15 @@
 
 namespace App\Entity;
 
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use App\Repository\UsuarioRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-
 
 #[ORM\Entity(repositoryClass: UsuarioRepository::class)]
-class Usuario
+#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -20,42 +20,17 @@ class Usuario
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $email = null;
+    #[ORM\Column(length: 255, unique: true)]
+    private ?string $email = null;    
 
     #[ORM\Column(length: 255)]
     private ?string $password = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $address = null;
+    #[ORM\Column(type: 'json')]
+    private array $roles = [];
 
-    #[ORM\Column(length: 255)]
-    private ?string $Phone = null;
-
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $Registratio_Date = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $rol = null;
-
-    // Relación uno a muchos con Orden
-    #[ORM\OneToMany(mappedBy: 'usuario', targetEntity: Orden::class)]
-    private Collection $ordenes;
-
-    // Relación uno a muchos con ListaDeseos
-    #[ORM\OneToMany(mappedBy: 'usuario', targetEntity: ListaDeseos::class)]
-    private Collection $listasDeseos;
-
-    // Relación uno a muchos con Carrito
-    #[ORM\OneToMany(mappedBy: 'usuario', targetEntity: Carrito::class)]
-    private Collection $carritos;
-
-    public function __construct()
-    {
-        $this->ordenes = new ArrayCollection();
-        $this->listasDeseos = new ArrayCollection();
-        $this->carritos = new ArrayCollection();
-    }
+    #[ORM\Column]
+    private bool $isVerified = false;
 
     public function getId(): ?int
     {
@@ -67,7 +42,7 @@ class Usuario
         return $this->name;
     }
 
-    public function setName(string $name): static
+    public function setName(string $name): self
     {
         $this->name = $name;
 
@@ -79,7 +54,7 @@ class Usuario
         return $this->email;
     }
 
-    public function setEmail(string $email): static
+    public function setEmail(string $email): self
     {
         $this->email = $email;
 
@@ -91,57 +66,45 @@ class Usuario
         return $this->password;
     }
 
-    public function setPassword(string $password): static
+    public function setPassword(string $password): self
     {
         $this->password = $password;
 
         return $this;
     }
 
-    public function getAddress(): ?string
+    public function getRoles(): array
     {
-        return $this->address;
+        $this->roles[] = 'ROLE_USER';
+        return array_unique($this->roles);
     }
 
-    public function setAddress(string $address): static
+    public function setRoles(array $roles): self
     {
-        $this->address = $address;
+        $this->roles = $roles;
 
-        return $this;
+        return $this; 
     }
 
-    public function getPhone(): ?string
+    public function eraseCredentials(): void
     {
-        return $this->Phone;
+        // Este método se utiliza para limpiar información sensible si es necesario.
+    }
+    
+
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
     }
 
-    public function setPhone(string $Phone): static
+    public function isVerified(): bool
     {
-        $this->Phone = $Phone;
-
-        return $this;
+        return $this->isVerified;
     }
 
-    public function getRegistratioDate(): ?\DateTimeInterface
+    public function setVerified(bool $isVerified): static
     {
-        return $this->Registratio_Date;
-    }
-
-    public function setRegistratioDate(\DateTimeInterface $Registratio_Date): static
-    {
-        $this->Registratio_Date = $Registratio_Date;
-
-        return $this;
-    }
-
-    public function getRol(): ?string
-    {
-        return $this->rol;
-    }
-
-    public function setRol(string $rol): static
-    {
-        $this->rol = $rol;
+        $this->isVerified = $isVerified;
 
         return $this;
     }

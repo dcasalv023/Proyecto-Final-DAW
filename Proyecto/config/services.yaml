@@ -4,12 +4,16 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    # Puedes añadir parámetros personalizados aquí si los necesitas
+    # Ejemplo:
+    # some_parameter: 'value'
 
 services:
-    # default configuration for services in *this* file
+    # Default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false       # Esto asegura que los servicios no sean públicos por defecto (buenas prácticas de seguridad)
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
@@ -19,6 +23,16 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+        # Si tienes clases que deben ser públicas, como comandos personalizados, puedes configurarlas así:
+        public: true
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+
+
+    # Add more service definitions when explicit configuration is needed
+    # Example of custom services:
+    # App\Service\YourService:
+    #     arguments:
+    #         $parameter: '%some_parameter%'
+    #         $another_dependency: '@another_service'
+    
+    # Puedes agregar más servicios aquí de ser necesario, asegurándote de que estén bien definidos.
