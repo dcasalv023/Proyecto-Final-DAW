@@ -90,7 +90,6 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // Este método se utiliza para limpiar información sensible si es necesario.
     }
-    
 
     public function getUserIdentifier(): string
     {

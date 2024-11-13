@@ -14,4 +14,3 @@ class CarritoController extends AbstractController
         return $this->render('carrito/ver.html.twig');
     }
 }
-
