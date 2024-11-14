@@ -1,6 +1,0 @@
-security:
-    providers:
-        app_user_provider:
-            entity:
-                class: App\Entity\Usuario
-                property: email # Campo único para identificar al usuario
