@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="container">
+        <h1 class="page-title">Lista de Productos</h1>
+
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Categoría</th>
+                        <th>Imagen</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if productos is empty %}
+                        <tr>
+                            <td colspan="7">No hay productos disponibles.</td>
+                        </tr>
+                    {% else %}
+                        {% for producto in productos %}
+                            <tr>
+                                <td>{{ producto.id }}</td>
+                                <td>{{ producto.name }}</td>
+                                <td>{{ producto.description }}</td>
+                                <td>{{ producto.price | number_format(2, '.', ',') }} USD</td>
+                                <td>{{ producto.stock }}</td>
+                                <td>{{ producto.categoria.name }}</td>
+                                <td>
+                                    {% if producto.imagenUrl %}
+                                        <img src="{{ asset('build/images/' ~ producto.imagenUrl) }}" alt="{{ producto.name }}" width="100">
+                                    {% else %}
+                                        <span>No disponible</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

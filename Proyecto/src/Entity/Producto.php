@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
-
 #[ORM\Entity(repositoryClass: ProductoRepository::class)]
 class Producto
 {
@@ -17,16 +16,16 @@ class Producto
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $Name = null;
+    private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $Description = null;
+    private ?string $description = null;
 
     #[ORM\Column]
-    private ?float $Price = null;
+    private ?float $price = null;
 
     #[ORM\Column]
-    private ?int $Stock = null;
+    private ?int $stock = null;
 
     #[ORM\Column(length: 255)]
     private ?string $imagenUrl = null;
@@ -62,49 +61,45 @@ class Producto
 
     public function getName(): ?string
     {
-        return $this->Name;
+        return $this->name;
     }
 
-    public function setName(string $Name): static
+    public function setName(string $name): static
     {
-        $this->Name = $Name;
-
+        $this->name = $name;
         return $this;
     }
 
     public function getDescription(): ?string
     {
-        return $this->Description;
+        return $this->description;
     }
 
-    public function setDescription(string $Description): static
+    public function setDescription(string $description): static
     {
-        $this->Description = $Description;
-
+        $this->description = $description;
         return $this;
     }
 
     public function getPrice(): ?float
     {
-        return $this->Price;
+        return $this->price;
     }
 
-    public function setPrice(float $Price): static
+    public function setPrice(float $price): static
     {
-        $this->Price = $Price;
-
+        $this->price = $price;
         return $this;
     }
 
     public function getStock(): ?int
     {
-        return $this->Stock;
+        return $this->stock;
     }
 
-    public function setStock(int $Stock): static
+    public function setStock(int $stock): static
     {
-        $this->Stock = $Stock;
-
+        $this->stock = $stock;
         return $this;
     }
 
@@ -116,14 +111,17 @@ class Producto
     public function setImagenUrl(string $imagenUrl): static
     {
         $this->imagenUrl = $imagenUrl;
-
         return $this;
     }
 
-    public function setId(int $id): static
+    public function getCategoria(): ?Categoria
     {
-        $this->id = $id;
+        return $this->categoria;
+    }
 
+    public function setCategoria(?Categoria $categoria): static
+    {
+        $this->categoria = $categoria;
         return $this;
     }
 }
