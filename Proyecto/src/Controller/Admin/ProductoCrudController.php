@@ -22,7 +22,7 @@ class ProductoCrudController extends AbstractCrudController
     {
         return [
             IdField::new('id')->hideOnForm(), // El ID no debe ser editable
-            TextField::new('Name', 'Nombre'),
+            TextField::new('Name', 'Name'),
             TextField::new('Description', 'Descripción'),
             MoneyField::new('Price', 'Precio')->setCurrency('USD'),
             IntegerField::new('Stock', 'Stock'),

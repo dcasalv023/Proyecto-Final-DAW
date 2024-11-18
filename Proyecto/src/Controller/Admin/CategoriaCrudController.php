@@ -23,10 +23,10 @@ class CategoriaCrudController extends AbstractCrudController
             IdField::new('id')->hideOnForm(),
 
             // Campo para el nombre de la categoría
-            TextField::new('nombre', 'Nombre'),
+            TextField::new('name', 'Name'),
 
             // Campo para la descripción
-            TextEditorField::new('descripcion', 'Descripción'),
+            TextEditorField::new('description', 'Description'),
 
             // Campo para ver la relación con productos, solo en el listado y detalle
             AssociationField::new('productos', 'Productos')

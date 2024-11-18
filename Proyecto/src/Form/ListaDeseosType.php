@@ -18,12 +18,12 @@ class ListaDeseosType extends AbstractType
         $builder
             ->add('usuario', EntityType::class, [
                 'class' => Usuario::class,
-                'choice_label' => 'nombre',
+                'choice_label' => 'name',
                 'label' => 'Usuario',
             ])
             ->add('productos', EntityType::class, [
                 'class' => Producto::class,
-                'choice_label' => 'nombre',
+                'choice_label' => 'name',
                 'multiple' => true,
                 'expanded' => true,
                 'label' => 'Productos',

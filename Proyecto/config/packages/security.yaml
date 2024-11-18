@@ -19,7 +19,7 @@ security:
         main:
             lazy: true
             provider: app_user_provider # Se cambió para usar el proveedor correcto
-            custom_authenticator: App\Security\UsaurioAuthenticator
+            custom_authenticator: App\Security\UsuarioAuthenticator
             logout:
                 path: app_logout
                 # where to redirect after logout

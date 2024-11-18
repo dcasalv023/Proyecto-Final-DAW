@@ -18,7 +18,7 @@ class DetalleOrdenType extends AbstractType
         $builder
             ->add('producto', EntityType::class, [
                 'class' => Producto::class,
-                'choice_label' => 'nombre',
+                'choice_label' => 'name',
                 'label' => 'Producto',
             ])
             ->add('cantidad', IntegerType::class, [
