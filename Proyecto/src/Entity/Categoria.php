@@ -8,7 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
-
 #[ORM\Entity(repositoryClass: CategoriaRepository::class)]
 class Categoria
 {
@@ -18,10 +17,10 @@ class Categoria
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $Name = null;
+    private ?string $nombre = null; // Cambiado a 'nombre'
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $Description = null;
+    private ?string $descripcion = null; // Cambiado a 'descripcion'
 
     // Relación uno a muchos con Producto
     #[ORM\OneToMany(mappedBy: 'categoria', targetEntity: Producto::class)]
@@ -37,26 +36,55 @@ class Categoria
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getNombre(): ?string // Cambiado a 'getNombre'
     {
-        return $this->Name;
+        return $this->nombre;
     }
 
-    public function setName(string $Name): static
+    public function setNombre(string $nombre): static // Cambiado a 'setNombre'
     {
-        $this->Name = $Name;
+        $this->nombre = $nombre;
 
         return $this;
     }
 
-    public function getDescription(): ?string
+    public function getDescripcion(): ?string // Cambiado a 'getDescripcion'
     {
-        return $this->Description;
+        return $this->descripcion;
     }
 
-    public function setDescription(string $Description): static
+    public function setDescripcion(string $descripcion): static // Cambiado a 'setDescripcion'
     {
-        $this->Description = $Description;
+        $this->descripcion = $descripcion;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Producto>
+     */
+    public function getProductos(): Collection
+    {
+        return $this->productos;
+    }
+
+    public function addProducto(Producto $producto): static
+    {
+        if (!$this->productos->contains($producto)) {
+            $this->productos[] = $producto;
+            $producto->setCategoria($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProducto(Producto $producto): static
+    {
+        if ($this->productos->removeElement($producto)) {
+            if ($producto->getCategoria() === $this) {
+                $producto->setCategoria(null);
+            }
+        }
 
         return $this;
     }
