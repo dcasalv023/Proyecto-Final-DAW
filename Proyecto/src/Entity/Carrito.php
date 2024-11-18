@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
-
 #[ORM\Entity(repositoryClass: CarritoRepository::class)]
 class Carrito
 {
@@ -46,6 +45,20 @@ class Carrito
     public function setCantidad(int $cantidad): static
     {
         $this->cantidad = $cantidad;
+
+        return $this;
+    }
+
+    // Método getUsuario
+    public function getUsuario(): ?Usuario
+    {
+        return $this->usuario;
+    }
+
+    // Método setUsuario
+    public function setUsuario(?Usuario $usuario): self
+    {
+        $this->usuario = $usuario;
 
         return $this;
     }

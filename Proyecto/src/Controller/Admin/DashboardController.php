@@ -9,6 +9,11 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\Producto;
 use App\Entity\Categoria;
+use App\Entity\Orden;
+use App\Entity\DetalleOrden;
+use App\Entity\ListaDeseos;
+
+
 
 class DashboardController extends AbstractDashboardController
 {
@@ -45,6 +50,9 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Productos', 'fas fa-box', Producto::class);
         yield MenuItem::linkToCrud('Categorías', 'fas fa-tags', Categoria::class);
+        yield MenuItem::linkToCrud('Órdenes', 'fas fa-shopping-cart', Orden::class);
+        yield MenuItem::linkToCrud('Detalles de Orden', 'fas fa-list', DetalleOrden::class);
+        yield MenuItem::linkToCrud('Listas de Deseos', 'fas fa-heart', ListaDeseos::class);
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
     }
 }

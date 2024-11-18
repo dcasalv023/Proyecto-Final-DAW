@@ -7,6 +7,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use App\Repository\UsuarioRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass: UsuarioRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
@@ -21,7 +23,7 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $name = null;
 
     #[ORM\Column(length: 255, unique: true)]
-    private ?string $email = null;    
+    private ?string $email = null;
 
     #[ORM\Column(length: 255)]
     private ?string $password = null;
@@ -32,10 +34,27 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private bool $isVerified = false;
 
+    // Relación uno a muchos con Carrito
+    #[ORM\OneToMany(mappedBy: 'usuario', targetEntity: Carrito::class, cascade: ['persist', 'remove'])]
+    private Collection $carritos;
+
+    // Relación uno a muchos con ListaDeseos
+    #[ORM\OneToMany(mappedBy: 'usuario', targetEntity: ListaDeseos::class, cascade: ['persist', 'remove'])]
+    private Collection $listasDeseos;
+
+    // Relación uno a muchos con Orden
+    #[ORM\OneToMany(mappedBy: 'usuario', targetEntity: Orden::class, cascade: ['persist', 'remove'])]
+    private Collection $ordenes;
+
     public function __construct()
     {
+        $this->carritos = new ArrayCollection();
+        $this->listasDeseos = new ArrayCollection();
+        $this->ordenes = new ArrayCollection();
+
+        // Garantizar que siempre el usuario tenga el rol de 'ROLE_USER'
         if (!in_array('ROLE_USER', $this->roles)) {
-            $this->roles[] = 'ROLE_USER'; // Garantizar siempre 'ROLE_USER'
+            $this->roles[] = 'ROLE_USER';
         }
     }
 
@@ -113,6 +132,87 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     public function setVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    // Métodos para Carrito
+    public function getCarritos(): Collection
+    {
+        return $this->carritos;
+    }
+
+    public function addCarrito(Carrito $carrito): static
+    {
+        if (!$this->carritos->contains($carrito)) {
+            $this->carritos->add($carrito);
+            $carrito->setUsuario($this);  // Asociar el carrito con el usuario
+        }
+
+        return $this;
+    }
+
+    public function removeCarrito(Carrito $carrito): static
+    {
+        if ($this->carritos->removeElement($carrito)) {
+            if ($carrito->getUsuario() === $this) {
+                $carrito->setUsuario(null);  // Desasociar el carrito
+            }
+        }
+
+        return $this;
+    }
+
+    // Métodos para ListaDeseos
+    public function getListasDeseos(): Collection
+    {
+        return $this->listasDeseos;
+    }
+
+    public function addListaDeseos(ListaDeseos $listaDeseos): static
+    {
+        if (!$this->listasDeseos->contains($listaDeseos)) {
+            $this->listasDeseos->add($listaDeseos);
+            $listaDeseos->setUsuario($this);  // Asociar la lista de deseos con el usuario
+        }
+
+        return $this;
+    }
+
+    public function removeListaDeseos(ListaDeseos $listaDeseos): static
+    {
+        if ($this->listasDeseos->removeElement($listaDeseos)) {
+            if ($listaDeseos->getUsuario() === $this) {
+                $listaDeseos->setUsuario(null);  // Desasociar la lista de deseos
+            }
+        }
+
+        return $this;
+    }
+
+    // Métodos para Orden
+    public function getOrdenes(): Collection
+    {
+        return $this->ordenes;
+    }
+
+    public function addOrden(Orden $orden): static
+    {
+        if (!$this->ordenes->contains($orden)) {
+            $this->ordenes->add($orden);
+            $orden->setUsuario($this);  // Asociar la orden con el usuario
+        }
+
+        return $this;
+    }
+
+    public function removeOrden(Orden $orden): static
+    {
+        if ($this->ordenes->removeElement($orden)) {
+            if ($orden->getUsuario() === $this) {
+                $orden->setUsuario(null);  // Desasociar la orden
+            }
+        }
 
         return $this;
     }

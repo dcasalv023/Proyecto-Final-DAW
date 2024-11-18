@@ -8,7 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
-
 #[ORM\Entity(repositoryClass: OrdenRepository::class)]
 class Orden
 {
@@ -62,6 +61,20 @@ class Orden
     public function setEstado(string $estado): static
     {
         $this->estado = $estado;
+
+        return $this;
+    }
+
+    // Método getUsuario
+    public function getUsuario(): ?Usuario
+    {
+        return $this->usuario;
+    }
+
+    // Método setUsuario
+    public function setUsuario(?Usuario $usuario): self
+    {
+        $this->usuario = $usuario;
 
         return $this;
     }
