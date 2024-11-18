@@ -29,7 +29,7 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(type: 'json')]
-    private array $roles = ['ROLE_USER']; // Rol predeterminado
+    private array $roles = ['ROLE_USER']; 
 
     #[ORM\Column]
     private bool $isVerified = false;
@@ -146,7 +146,7 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->carritos->contains($carrito)) {
             $this->carritos->add($carrito);
-            $carrito->setUsuario($this);  // Asociar el carrito con el usuario
+            $carrito->setUsuario($this);  
         }
 
         return $this;
@@ -156,7 +156,7 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->carritos->removeElement($carrito)) {
             if ($carrito->getUsuario() === $this) {
-                $carrito->setUsuario(null);  // Desasociar el carrito
+                $carrito->setUsuario(null);  
             }
         }
 
@@ -173,7 +173,7 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->listasDeseos->contains($listaDeseos)) {
             $this->listasDeseos->add($listaDeseos);
-            $listaDeseos->setUsuario($this);  // Asociar la lista de deseos con el usuario
+            $listaDeseos->setUsuario($this);  
         }
 
         return $this;
@@ -183,14 +183,14 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->listasDeseos->removeElement($listaDeseos)) {
             if ($listaDeseos->getUsuario() === $this) {
-                $listaDeseos->setUsuario(null);  // Desasociar la lista de deseos
+                $listaDeseos->setUsuario(null);  
             }
         }
 
         return $this;
     }
 
-    // Métodos para Orden
+
     public function getOrdenes(): Collection
     {
         return $this->ordenes;
@@ -200,7 +200,7 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->ordenes->contains($orden)) {
             $this->ordenes->add($orden);
-            $orden->setUsuario($this);  // Asociar la orden con el usuario
+            $orden->setUsuario($this); 
         }
 
         return $this;
@@ -210,7 +210,7 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if ($this->ordenes->removeElement($orden)) {
             if ($orden->getUsuario() === $this) {
-                $orden->setUsuario(null);  // Desasociar la orden
+                $orden->setUsuario(null);  
             }
         }
 

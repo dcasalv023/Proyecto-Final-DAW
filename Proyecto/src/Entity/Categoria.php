@@ -17,10 +17,10 @@ class Categoria
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $nombre = null; // Cambiado a 'nombre'
+    private ?string $nombre = null; 
 
     #[ORM\Column(type: Types::TEXT)]
-    private ?string $descripcion = null; // Cambiado a 'descripcion'
+    private ?string $descripcion = null; 
 
     // Relación uno a muchos con Producto
     #[ORM\OneToMany(mappedBy: 'categoria', targetEntity: Producto::class)]
@@ -36,24 +36,24 @@ class Categoria
         return $this->id;
     }
 
-    public function getNombre(): ?string // Cambiado a 'getNombre'
+    public function getNombre(): ?string 
     {
         return $this->nombre;
     }
 
-    public function setNombre(string $nombre): static // Cambiado a 'setNombre'
+    public function setNombre(string $nombre): static 
     {
         $this->nombre = $nombre;
 
         return $this;
     }
 
-    public function getDescripcion(): ?string // Cambiado a 'getDescripcion'
+    public function getDescripcion(): ?string
     {
         return $this->descripcion;
     }
 
-    public function setDescripcion(string $descripcion): static // Cambiado a 'setDescripcion'
+    public function setDescripcion(string $descripcion): static 
     {
         $this->descripcion = $descripcion;
 

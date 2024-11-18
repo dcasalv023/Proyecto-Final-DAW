@@ -7,7 +7,7 @@ use App\Entity\Usuario;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\TextType; // Asegúrate de importar este tipo de campo
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -19,10 +19,10 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class, [  // Agregado el campo 'name'
+            ->add('name', TextType::class, [ 
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter your name', // Agregado para validar que el campo no esté vacío
+                        'message' => 'Please enter your name',
                     ]),
                 ],
             ])
@@ -40,7 +40,7 @@ class RegistrationFormType extends AbstractType
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
                     new NotBlank([
-                        'message' => 'Please enter a password',
+                        'message' => 'Pon una contraseña por favor',
                     ]),
                     new Length([
                         'min' => 6,
