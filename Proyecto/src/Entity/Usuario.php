@@ -190,7 +190,6 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-
     public function getOrdenes(): Collection
     {
         return $this->ordenes;
@@ -215,5 +214,11 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         return $this;
+    }
+
+    
+    public function __toString(): string
+    {
+        return $this->name . ' (' . $this->email . ')';
     }
 }

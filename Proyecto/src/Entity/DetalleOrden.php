@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
-
 #[ORM\Entity(repositoryClass: DetalleOrdenRepository::class)]
 class DetalleOrden
 {
@@ -64,4 +63,43 @@ class DetalleOrden
 
         return $this;
     }
+
+    // Getter para productos
+    public function getProductos(): Collection
+    {
+        return $this->productos;
+    }
+
+    // Método para añadir productos a la colección
+    public function addProducto(Producto $producto): self
+    {
+        if (!$this->productos->contains($producto)) {
+            $this->productos[] = $producto;
+        }
+
+        return $this;
+    }
+
+    // Método para quitar productos de la colección
+    public function removeProducto(Producto $producto): self
+    {
+        $this->productos->removeElement($producto);
+
+        return $this;
+    }
+
+    // Relación ManyToOne con Orden
+    public function getOrden(): ?Orden
+    {
+        return $this->orden;
+    }
+
+    public function setOrden(?Orden $orden): self
+    {
+        $this->orden = $orden;
+
+        return $this;
+    }
+
+    
 }

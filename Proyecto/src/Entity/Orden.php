@@ -78,4 +78,17 @@ class Orden
 
         return $this;
     }
+
+    // Getter para detallesOrden
+    public function getDetallesOrden(): Collection
+    {
+        return $this->detallesOrden;
+    }
+
+    public function setDetallesOrden(Collection $detallesOrden): self
+{
+    $this->detallesOrden = $detallesOrden;
+    return $this;
+}
+
 }

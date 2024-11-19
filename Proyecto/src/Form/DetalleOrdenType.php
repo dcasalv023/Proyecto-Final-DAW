@@ -21,10 +21,10 @@ class DetalleOrdenType extends AbstractType
                 'choice_label' => 'name',
                 'label' => 'Producto',
             ])
-            ->add('cantidad', IntegerType::class, [
+            ->add('Cantidad', IntegerType::class, [  // Cambié 'cantidad' a 'Cantidad'
                 'label' => 'Cantidad',
             ])
-            ->add('precio', MoneyType::class, [
+            ->add('precioUnitario', MoneyType::class, [  // Cambié 'precio' a 'precioUnitario'
                 'currency' => 'USD',
                 'label' => 'Precio',
             ]);

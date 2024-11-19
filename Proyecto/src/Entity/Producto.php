@@ -20,8 +20,8 @@ class Producto
 
     #[ORM\Column(length: 255)]
     private ?string $description = null;
-
-    #[ORM\Column]
+    
+    #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
     private ?float $price = null;
 
     #[ORM\Column]

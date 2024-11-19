@@ -24,7 +24,7 @@ class ProductoCrudController extends AbstractCrudController
             IdField::new('id')->hideOnForm(), // El ID no debe ser editable
             TextField::new('Name', 'Name'),
             TextField::new('Description', 'Descripción'),
-            MoneyField::new('Price', 'Precio')->setCurrency('USD'),
+            MoneyField::new('price', 'Precio')->setCurrency('EUR'),
             IntegerField::new('Stock', 'Stock'),
             ImageField::new('imagenUrl', 'Imagen')
                 ->setBasePath('/assets/images') // Definir la carpeta base para las imágenes
