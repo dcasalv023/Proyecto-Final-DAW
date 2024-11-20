@@ -23,44 +23,44 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/register', name: 'app_register')]
-public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
-{
-    $user = new Usuario();
-    $form = $this->createForm(RegistrationFormType::class, $user);
-    $form->handleRequest($request);
-
-    if ($form->isSubmitted() && $form->isValid()) {
-        // Encode la contraseña
-        $user->setPassword(
-            $userPasswordHasher->hashPassword(
-                $user,
-                $form->get('plainPassword')->getData()
-            )
-        );
-
-        // Asignar rol explícitamente (opcional)
-        $user->setRoles(['ROLE_USER']);
-
-        // Persistir usuario
-        $entityManager->persist($user);
-        $entityManager->flush();
-
-        // Generar un enlace de confirmación
-        $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-            (new TemplatedEmail())
-                ->from(new Address('castillejousopersonal@gmail.com', 'Tienda Anime'))
-                ->to($user->getEmail())
-                ->subject('Please Confirm your Email')
-                ->htmlTemplate('registration/confirmation_email.html.twig')
-        );
-
-        return $this->redirectToRoute('app_perfil');
+    public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    {
+        // Redirige al perfil si el usuario ya está autenticado
+        if ($this->getUser()) {
+            return $this->redirectToRoute('app_perfil');
+        }
+    
+        $user = new Usuario();
+        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user->setPassword(
+                $userPasswordHasher->hashPassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+            $user->setRoles(['ROLE_USER']);
+            $entityManager->persist($user);
+            $entityManager->flush();
+    
+            $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+                (new TemplatedEmail())
+                    ->from(new Address('castillejousopersonal@gmail.com', 'Tienda Anime'))
+                    ->to($user->getEmail())
+                    ->subject('Please Confirm your Email')
+                    ->htmlTemplate('registration/confirmation_email.html.twig')
+            );
+    
+            return $this->redirectToRoute('app_perfil');
+        }
+    
+        return $this->render('registration/register.html.twig', [
+            'registrationForm' => $form,
+        ]);
     }
-
-    return $this->render('registration/register.html.twig', [
-        'registrationForm' => $form,
-    ]);
-}
+    
 
 
     #[Route('/verify/email', name: 'app_verify_email')]

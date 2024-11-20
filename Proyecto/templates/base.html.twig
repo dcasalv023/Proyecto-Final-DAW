@@ -34,13 +34,21 @@
                             <a href="{{ path('app_productos') }}" style="color: white; text-decoration: none;">Productos</a>
                         </li>
 
+                        {% if not app.user %}
                         <li>
                             <a href="{{ path('app_login') }}" style="color: white; text-decoration: none;">Iniciar Sesión</a>
                         </li>
-
                         <li>
                             <a href="{{ path('app_register') }}" style="color: white; text-decoration: none;">Registrarse</a>
                         </li>
+                    {% else %}
+                        <li>
+                            <a href="{{ path('app_perfil') }}" style="color: white; text-decoration: none;">Mi Perfil</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('app_logout') }}" style="color: white; text-decoration: none;">Cerrar Sesión</a>
+                        </li>
+                    {% endif %}
 
                         <li>
                             <a href="{{ path('app_carrito') }}" style="color: white; text-decoration: none;">Carrito de Compras 🛒</a>
@@ -50,6 +58,7 @@
                             <a href="{{ path('app_deseados') }}" style="color: white; text-decoration: none;">Lista de Deseados ❤️</a>
                         </li>
                     </ul>
+
                 </div>
             </nav>
         </header>

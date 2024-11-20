@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
@@ -19,14 +20,19 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class, [ 
+            // Campo para el nombre
+            ->add('name', TextType::class, [
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter your name',
                     ]),
                 ],
             ])
+
+            // Campo para el correo electrónico
             ->add('email')
+
+            // Campo para aceptar los términos y condiciones
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
@@ -35,6 +41,8 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
+
+            // Campo para la contraseña
             ->add('plainPassword', PasswordType::class, [
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
@@ -49,6 +57,14 @@ class RegistrationFormType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
+            ])
+
+            // Nuevo campo para la imagen de perfil (opcional)
+            ->add('imagePerfil', FileType::class, [
+                'label' => 'Foto de perfil (opcional)',
+                'required' => false, // Hacer que el campo sea opcional
+                'mapped' => false, // No se mapea a la entidad directamente
+                'attr' => ['accept' => 'image/*'], // Acepta solo imágenes
             ])
         ;
     }

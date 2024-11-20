@@ -46,6 +46,10 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'usuario', targetEntity: Orden::class, cascade: ['persist', 'remove'])]
     private Collection $ordenes;
 
+    // NUEVO CAMPO PARA LA IMAGEN DE PERFIL
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private ?string $imagePerfil = null;
+
     public function __construct()
     {
         $this->carritos = new ArrayCollection();
@@ -216,7 +220,19 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    
+    // Getter y Setter para la imagen de perfil
+    public function getImagePerfil(): ?string
+    {
+        return $this->imagePerfil;
+    }
+
+    public function setImagePerfil(?string $imagePerfil): self
+    {
+        $this->imagePerfil = $imagePerfil;
+
+        return $this;
+    }
+
     public function __toString(): string
     {
         return $this->name . ' (' . $this->email . ')';
