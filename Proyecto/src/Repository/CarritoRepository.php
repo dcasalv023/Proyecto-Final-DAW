@@ -1,5 +1,5 @@
 <?php
-
+// src/Repository/CarritoRepository.php
 namespace App\Repository;
 
 use App\Entity\Carrito;
@@ -16,28 +16,24 @@ class CarritoRepository extends ServiceEntityRepository
         parent::__construct($registry, Carrito::class);
     }
 
-    //    /**
-    //     * @return Carrito[] Returns an array of Carrito objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('c.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    public function findByUsuario($usuarioId): array
+    {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.usuario = :usuarioId')
+            ->setParameter('usuarioId', $usuarioId)
+            ->getQuery()
+            ->getResult();
+    }
 
-    //    public function findOneBySomeField($value): ?Carrito
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function vaciarCarrito($usuarioId): void
+    {
+        $this->createQueryBuilder('c')
+            ->delete()
+            ->where('c.usuario = :usuarioId')
+            ->setParameter('usuarioId', $usuarioId)
+            ->getQuery()
+            ->execute();
+    }
 }
+
+

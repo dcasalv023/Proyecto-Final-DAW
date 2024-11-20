@@ -1,9 +1,9 @@
 doctrine_migrations:
     migrations_paths:
-        'DoctrineMigrations': '%kernel.project_dir%/src/Migrations'
+        'App\Migrations': '%kernel.project_dir%/migrations'
     storage:
         table_storage:
             table_name: 'doctrine_migration_versions'
-    all_or_nothing: true
-    transactional: true
+    all_or_nothing: false  
+    transactional: false  
     check_database_platform: false

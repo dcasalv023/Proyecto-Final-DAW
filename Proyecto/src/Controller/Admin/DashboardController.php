@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Carrito;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
@@ -38,5 +39,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Órdenes', 'fas fa-shopping-cart', Orden::class);
         yield MenuItem::linkToCrud('Detalles de Orden', 'fas fa-list', DetalleOrden::class); 
         yield MenuItem::linkToCrud('Listas de Deseos', 'fas fa-heart', ListaDeseos::class);
+        yield MenuItem::linkToCrud('Carrito', 'fas fa-heart', Carrito::class);
     }
 }

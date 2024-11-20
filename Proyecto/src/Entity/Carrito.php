@@ -4,8 +4,6 @@ namespace App\Entity;
 
 use App\Repository\CarritoRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass: CarritoRepository::class)]
 class Carrito
@@ -23,14 +21,10 @@ class Carrito
     #[ORM\JoinColumn(nullable: false)]
     private ?Usuario $usuario = null;
 
-    // Relación muchos a muchos con Producto
-    #[ORM\ManyToMany(targetEntity: Producto::class, inversedBy: 'carritos')]
-    private Collection $productos;
-
-    public function __construct()
-    {
-        $this->productos = new ArrayCollection();
-    }
+    // Relación muchos a uno con Producto
+    #[ORM\ManyToOne(targetEntity: Producto::class, inversedBy: 'carritos')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Producto $producto = null;
 
     public function getId(): ?int
     {
@@ -45,21 +39,28 @@ class Carrito
     public function setCantidad(int $cantidad): static
     {
         $this->cantidad = $cantidad;
-
         return $this;
     }
 
-    // Método getUsuario
     public function getUsuario(): ?Usuario
     {
         return $this->usuario;
     }
 
-    // Método setUsuario
-    public function setUsuario(?Usuario $usuario): self
+    public function setUsuario(?Usuario $usuario): static
     {
         $this->usuario = $usuario;
+        return $this;
+    }
 
+    public function getProducto(): ?Producto
+    {
+        return $this->producto;
+    }
+
+    public function setProducto(?Producto $producto): static
+    {
+        $this->producto = $producto;
         return $this;
     }
 }

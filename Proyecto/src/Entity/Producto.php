@@ -20,9 +20,9 @@ class Producto
 
     #[ORM\Column(length: 255)]
     private ?string $description = null;
-    
+
     #[ORM\Column(type: 'decimal', precision: 10, scale: 2)]
-    private ?float $price = null;
+    private ?string $price = null;
 
     #[ORM\Column]
     private ?int $stock = null;
@@ -35,13 +35,13 @@ class Producto
     #[ORM\JoinColumn(nullable: false)]
     private ?Categoria $categoria = null;
 
+    // Relación inversa con Carrito
+    #[ORM\OneToMany(mappedBy: 'producto', targetEntity: Carrito::class)]
+    private Collection $carritos;
+
     // Relación muchos a muchos con ListaDeseos
     #[ORM\ManyToMany(targetEntity: ListaDeseos::class, mappedBy: 'productos')]
     private Collection $listasDeseos;
-
-    // Relación muchos a muchos con Carrito
-    #[ORM\ManyToMany(targetEntity: Carrito::class, mappedBy: 'productos')]
-    private Collection $carritos;
 
     // Relación muchos a muchos con DetalleOrden
     #[ORM\ManyToMany(targetEntity: DetalleOrden::class, mappedBy: 'productos')]
@@ -49,8 +49,8 @@ class Producto
 
     public function __construct()
     {
-        $this->listasDeseos = new ArrayCollection();
         $this->carritos = new ArrayCollection();
+        $this->listasDeseos = new ArrayCollection();
         $this->detallesOrden = new ArrayCollection();
     }
 
@@ -81,12 +81,12 @@ class Producto
         return $this;
     }
 
-    public function getPrice(): ?float
+    public function getPrice(): ?string
     {
         return $this->price;
     }
 
-    public function setPrice(float $price): static
+    public function setPrice(string $price): static
     {
         $this->price = $price;
         return $this;
@@ -124,4 +124,36 @@ class Producto
         $this->categoria = $categoria;
         return $this;
     }
+
+    public function getCarritos(): Collection
+    {
+        return $this->carritos;
+    }
+
+    public function addCarrito(Carrito $carrito): static
+    {
+        if (!$this->carritos->contains($carrito)) {
+            $this->carritos->add($carrito);
+            $carrito->setProducto($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCarrito(Carrito $carrito): static
+    {
+        if ($this->carritos->removeElement($carrito)) {
+            if ($carrito->getProducto() === $this) {
+                $carrito->setProducto(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name; 
+    }
+
 }
