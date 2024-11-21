@@ -1,21 +1,41 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CarritoController!{% endblock %}
-
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
+<div class="container">
+    <h1>Mi Carrito</h1>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    {% if carrito|length == 0 %}
+        <p>No tienes productos en tu carrito.</p>
+    {% else %}
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Imagen</th>
+                    <th>Producto</th>
+                    <th>Precio</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in carrito %}
+                    <tr>
+                        <td>
+                            <img src="{{ asset('build/images/' ~ item.producto.imagenUrl) }}" alt="{{ item.producto.name }}" style="width: 100px; height: auto;">
+                        </td>
+                        <td>{{ item.producto.name }}</td>
+                        <td>{{ (item.producto.price / 100) | number_format(2, '.', '') }}€</td>
+                        <td>{{ item.cantidad }}</td>
+                        <td>{{ (item.producto.price * item.cantidad / 100) | number_format(2, '.', '') }}€</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/pract/Documents/Proyecto-Final-DAW/Proyecto/src/Controller/CarritoController.php</code></li>
-        <li>Your template at <code>C:/Users/pract/Documents/Proyecto-Final-DAW/Proyecto/templates/carrito/index.html.twig</code></li>
-    </ul>
+    {% if not usuarioAutenticado %}
+        <p>Debes iniciar sesión para completar tu compra.</p>
+        <a href="{{ path('app_login') }}" class="btn btn-primary">Iniciar Sesión</a>
+    {% endif %}
 </div>
 {% endblock %}
-

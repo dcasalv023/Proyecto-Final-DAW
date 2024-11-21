@@ -38,6 +38,11 @@
                                         <span>No disponible</span>
                                     {% endif %}
                                 </td>
+                                <td>
+                                    <a href="{{ path('app_carrito_agregar', { id: producto.id }) }}" class="btn btn-primary">
+                                    Comprar
+                                    </a>
+                                </td>
                             </tr>
                         {% endfor %}
                     {% endif %}

@@ -29,34 +29,20 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(type: 'json')]
-    private array $roles = ['ROLE_USER']; 
+    private array $roles = ['ROLE_USER'];
 
     #[ORM\Column]
     private bool $isVerified = false;
 
-    // Relación uno a muchos con Carrito
     #[ORM\OneToMany(mappedBy: 'usuario', targetEntity: Carrito::class, cascade: ['persist', 'remove'])]
     private Collection $carritos;
 
-    // Relación uno a muchos con ListaDeseos
-    #[ORM\OneToMany(mappedBy: 'usuario', targetEntity: ListaDeseos::class, cascade: ['persist', 'remove'])]
-    private Collection $listasDeseos;
-
-    // Relación uno a muchos con Orden
-    #[ORM\OneToMany(mappedBy: 'usuario', targetEntity: Orden::class, cascade: ['persist', 'remove'])]
-    private Collection $ordenes;
-
-    // NUEVO CAMPO PARA LA IMAGEN DE PERFIL
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $imagePerfil = null;
 
     public function __construct()
     {
         $this->carritos = new ArrayCollection();
-        $this->listasDeseos = new ArrayCollection();
-        $this->ordenes = new ArrayCollection();
-
-        // Garantizar que siempre el usuario tenga el rol de 'ROLE_USER'
         if (!in_array('ROLE_USER', $this->roles)) {
             $this->roles[] = 'ROLE_USER';
         }
@@ -75,7 +61,6 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     public function setName(string $name): self
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -87,7 +72,6 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     public function setEmail(string $email): self
     {
         $this->email = $email;
-
         return $this;
     }
 
@@ -99,7 +83,6 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPassword(string $password): self
     {
         $this->password = $password;
-
         return $this;
     }
 
@@ -114,14 +97,10 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
             $roles[] = 'ROLE_USER';
         }
         $this->roles = array_unique($roles);
-
         return $this;
     }
 
-    public function eraseCredentials(): void
-    {
-        // Método para borrar credenciales sensibles si es necesario
-    }
+    public function eraseCredentials(): void {}
 
     public function getUserIdentifier(): string
     {
@@ -133,94 +112,34 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->isVerified;
     }
 
-    public function setVerified(bool $isVerified): static
+    public function setVerified(bool $isVerified): self
     {
         $this->isVerified = $isVerified;
-
         return $this;
     }
 
-    // Métodos para Carrito
     public function getCarritos(): Collection
     {
         return $this->carritos;
     }
 
-    public function addCarrito(Carrito $carrito): static
+    public function addCarrito(Carrito $carrito): self
     {
         if (!$this->carritos->contains($carrito)) {
             $this->carritos->add($carrito);
-            $carrito->setUsuario($this);  
+            $carrito->setUsuario($this);
         }
-
         return $this;
     }
 
-    public function removeCarrito(Carrito $carrito): static
+    public function removeCarrito(Carrito $carrito): self
     {
-        if ($this->carritos->removeElement($carrito)) {
-            if ($carrito->getUsuario() === $this) {
-                $carrito->setUsuario(null);  
-            }
+        if ($this->carritos->removeElement($carrito) && $carrito->getUsuario() === $this) {
+            $carrito->setUsuario(null);
         }
-
         return $this;
     }
 
-    // Métodos para ListaDeseos
-    public function getListasDeseos(): Collection
-    {
-        return $this->listasDeseos;
-    }
-
-    public function addListaDeseos(ListaDeseos $listaDeseos): static
-    {
-        if (!$this->listasDeseos->contains($listaDeseos)) {
-            $this->listasDeseos->add($listaDeseos);
-            $listaDeseos->setUsuario($this);  
-        }
-
-        return $this;
-    }
-
-    public function removeListaDeseos(ListaDeseos $listaDeseos): static
-    {
-        if ($this->listasDeseos->removeElement($listaDeseos)) {
-            if ($listaDeseos->getUsuario() === $this) {
-                $listaDeseos->setUsuario(null);  
-            }
-        }
-
-        return $this;
-    }
-
-    public function getOrdenes(): Collection
-    {
-        return $this->ordenes;
-    }
-
-    public function addOrden(Orden $orden): static
-    {
-        if (!$this->ordenes->contains($orden)) {
-            $this->ordenes->add($orden);
-            $orden->setUsuario($this); 
-        }
-
-        return $this;
-    }
-
-    public function removeOrden(Orden $orden): static
-    {
-        if ($this->ordenes->removeElement($orden)) {
-            if ($orden->getUsuario() === $this) {
-                $orden->setUsuario(null);  
-            }
-        }
-
-        return $this;
-    }
-
-    // Getter y Setter para la imagen de perfil
     public function getImagePerfil(): ?string
     {
         return $this->imagePerfil;
@@ -229,7 +148,6 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     public function setImagePerfil(?string $imagePerfil): self
     {
         $this->imagePerfil = $imagePerfil;
-
         return $this;
     }
 
