@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="product-detail container">
+        <h1>{{ producto.name }}</h1>
+        <p>{{ producto.description }}</p>
+        <p>Precio: {{ (producto.price / 100) | number_format(2, '.', '') }}€</p>
+        <p>Stock disponible: {{ producto.stock }}</p>
+
+        <!-- Galería de imágenes -->
+        <div class="product-gallery">
+            <a href="{{ asset('build/images/' ~ producto.imagenUrl) }}" data-lightbox="product-images">
+                <img src="{{ asset('build/images/' ~ producto.imagenUrl) }}" alt="{{ producto.name }}" width="300">
+            </a>
+            {# Si tienes más imágenes, agrégalas aquí #}
+        </div>
+
+        <!-- Variantes (colores, tallas, etc.) -->
+        <div class="product-variants">
+            <label for="variant-select">Selecciona una variante:</label>
+            <select id="variant-select">
+                <option value="default" data-price="{{ producto.price }}">Por defecto</option>
+                <!-- Puedes cargar variantes dinámicamente desde la base de datos -->
+            </select>
+        </div>
+
+        <!-- Cantidad ajustable -->
+        <div class="quantity-selector">
+            <button id="decrease-quantity">-</button>
+            <input type="number" id="product-quantity" value="1" min="1" max="{{ producto.stock }}">
+            <button id="increase-quantity">+</button>
+        </div>
+
+        <!-- Añadir al carrito -->
+        <button id="add-to-cart" class="btn btn-primary" data-product-id="{{ producto.id }}">Añadir al carrito</button>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('productDetail') }} {# Asegúrate de tener un script para este archivo JS #}
+{% endblock %}

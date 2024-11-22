@@ -15,12 +15,13 @@
                         <th>Stock</th>
                         <th>Categoría</th>
                         <th>Imagen</th>
+                        <th>Acciones</th> <!-- Nueva columna de acciones -->
                     </tr>
                 </thead>
                 <tbody>
                     {% if productos is empty %}
                         <tr>
-                            <td colspan="7">No hay productos disponibles.</td>
+                            <td colspan="8">No hay productos disponibles.</td>
                         </tr>
                     {% else %}
                         {% for producto in productos %}
@@ -39,8 +40,12 @@
                                     {% endif %}
                                 </td>
                                 <td>
+                                    <!-- Enlace para ver los detalles del producto -->
+                                    <a href="{{ path('app_producto_detalle', { id: producto.id }) }}" class="btn btn-info">
+                                        Ver detalles
+                                    </a>
                                     <a href="{{ path('app_carrito_agregar', { id: producto.id }) }}" class="btn btn-primary">
-                                    Comprar
+                                        Comprar
                                     </a>
                                 </td>
                             </tr>
