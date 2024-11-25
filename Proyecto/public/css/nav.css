@@ -1,0 +1,106 @@
+/* nav.css */
+
+/* Eliminar márgenes y agregar padding al body */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Barra de navegación */
+.navbar {
+    background-color: #808080; /* Fondo gris */
+    padding: 1rem 0; /* Espaciado vertical */
+}
+
+/* Contenedor principal */
+.navbar .container {
+    display: flex;
+    justify-content: space-between; /* Espaciado entre logo y contenido */
+    align-items: center;
+    position: relative; /* Necesario para posicionar elementos absolutos como el carrito */
+}
+
+/* Menú de navegación */
+/* Menú de navegación */
+.navbar-nav {
+    display: flex;
+    justify-content: flex-start; /* Alineación a la izquierda */
+    width: 100%; /* Asegura que el ul ocupe todo el espacio disponible */
+    position: absolute; /* Colocamos el ul en una posición absoluta */
+    top: 60px; /* Movemos el div un poco hacia abajo (ajusta este valor según sea necesario) */
+    padding: 10px 0; /* Padding en la parte superior e inferior */
+    background-color: transparent; /* Eliminar el fondo naranja */
+}
+
+/* Estilo de los enlaces */
+.navbar-nav .nav-item {
+    margin: 0; /* Eliminar márgenes entre los elementos */
+    position: relative;
+    padding: 0; /* Sin padding extra en los elementos de la lista */
+}
+
+/* Estilo de cada enlace */
+.navbar-nav .nav-link {
+    color: white; /* Color de los enlaces */
+    font-size: 1.2rem; /* Tamaño de fuente */
+    text-decoration: none; /* Quitar subrayado por defecto */
+    padding: 10px 20px; /* Añadido espacio lateral para los bordes */
+    transition: all 0.3s ease; /* Transición suave para el hover */
+    border-top: 2px solid black; /* Borde superior negro */
+    border-bottom: 2px solid black; /* Borde inferior negro */
+    border-left: 1px solid black; /* Borde izquierdo negro */
+    border-right: 1px solid black; /* Borde derecho negro */
+}
+
+/* Aseguramos que el último enlace también tenga borde derecho */
+.navbar-nav .nav-link:last-child {
+    border-right: 1px solid black; /* Asegura que el último enlace también tenga borde derecho */
+}
+
+/* Eliminar el borde derecho del último enlace solo en hover */
+.navbar-nav .nav-link:last-child:hover {
+    border-right: 1px solid #FFD700; /* El borde derecho se vuelve dorado al pasar el cursor */
+}
+
+/* Efecto hover para los enlaces */
+.navbar-nav .nav-link:hover {
+    color: #FFD700; /* Cambiar el color a dorado al hacer hover */
+    border-top: 2px solid #FFD700; /* Borde superior dorado al pasar el cursor */
+    border-bottom: 2px solid #FFD700; /* Borde inferior dorado al pasar el cursor */
+    border-left: 1px solid #FFD700; /* Borde izquierdo dorado al pasar el cursor */
+    border-right: 1px solid #FFD700; /* Borde derecho dorado al pasar el cursor */
+}
+
+.navbar-brand img {
+    height: 60px; /* Tamaño del logo */
+}
+
+/* Botón de menú en dispositivos móviles */
+.navbar-toggler {
+    border-color: white; /* Borde blanco en el botón de menú */
+}
+
+.navbar-toggler-icon {
+    background-color: white; /* Color blanco para el ícono del menú */
+}
+
+/* Enlace del carrito */
+.nav-cart {
+    color: white; /* Color del texto */
+    font-size: 1.2rem; /* Tamaño del texto */
+    text-decoration: none; /* Sin subrayado */
+    padding: 10px 20px; /* Espaciado interno */
+    position: absolute; /* Posición absoluta en el contenedor */
+    right: 450px; /* Cambia este valor para moverlo más a la izquierda */
+    top: 50%; /* Centrado verticalmente */
+    transform: translateY(-50%); /* Ajuste vertical */
+    transition: color 0.3s ease; /* Efecto de color suave */
+}
+
+/* Hover para el carrito */
+.nav-cart:hover {
+    color: #FFD700; /* Dorado en hover */
+}
+
+

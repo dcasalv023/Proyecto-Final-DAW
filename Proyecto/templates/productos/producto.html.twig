@@ -4,7 +4,12 @@
     <div class="product-detail container">
         <h1>{{ producto.name }}</h1>
         <p>{{ producto.description }}</p>
-        <p>Precio: {{ (producto.price / 100) | number_format(2, '.', '') }}€</p>
+        <p>
+            Precio total:
+            <span id="product-price" data-base-price="{{ producto.price / 100 }}">
+                {{ (producto.price / 100) | number_format(2, '.', '') }}€
+            </span>
+        </p>
         <p>Stock disponible: {{ producto.stock }}</p>
 
         <!-- Galería de imágenes -->
@@ -12,16 +17,6 @@
             <a href="{{ asset('build/images/' ~ producto.imagenUrl) }}" data-lightbox="product-images">
                 <img src="{{ asset('build/images/' ~ producto.imagenUrl) }}" alt="{{ producto.name }}" width="300">
             </a>
-            {# Si tienes más imágenes, agrégalas aquí #}
-        </div>
-
-        <!-- Variantes (colores, tallas, etc.) -->
-        <div class="product-variants">
-            <label for="variant-select">Selecciona una variante:</label>
-            <select id="variant-select">
-                <option value="default" data-price="{{ producto.price }}">Por defecto</option>
-                <!-- Puedes cargar variantes dinámicamente desde la base de datos -->
-            </select>
         </div>
 
         <!-- Cantidad ajustable -->
@@ -38,5 +33,5 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('productDetail') }} {# Asegúrate de tener un script para este archivo JS #}
+    {{ encore_entry_script_tags('productDetail') }} {# Incluye el archivo JS específico para esta página #}
 {% endblock %}
