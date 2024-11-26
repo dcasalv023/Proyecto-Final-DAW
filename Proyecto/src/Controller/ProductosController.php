@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Producto;
+use App\Entity\Categoria;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -19,16 +21,37 @@ class ProductosController extends AbstractController
     }
 
     #[Route("/productos", name: "app_productos")]
-    public function lista(): Response
+    public function lista(Request $request): Response
     {
-        // Obtener todos los productos desde la base de datos usando el EntityManager
-        $productos = $this->entityManager
-            ->getRepository(Producto::class)
-            ->findAll();
+        // Obtener los parámetros de la solicitud (filtros)
+        $categoriaId = $request->query->get('categoria');
+        $precio = $request->query->get('precio'); // Solo un valor de precio
 
-        // Renderizar la plantilla y pasar los productos
+        // Crear un QueryBuilder para la consulta
+        $queryBuilder = $this->entityManager->getRepository(Producto::class)->createQueryBuilder('p');
+
+        // Filtrar por categoría
+        if ($categoriaId) {
+            $queryBuilder->andWhere('p.categoria = :categoria')
+                        ->setParameter('categoria', $categoriaId);
+        }
+
+        // Filtrar por precio
+        if ($precio) {
+            $queryBuilder->andWhere('p.price <= :precio')
+                         ->setParameter('precio', $precio * 100); // Convertimos el precio a centavos
+        }
+
+        // Ejecutar la consulta
+        $productos = $queryBuilder->getQuery()->getResult();
+
+        // Obtener todas las categorías para el filtro
+        $categorias = $this->entityManager->getRepository(Categoria::class)->findAll();
+
+        // Renderizar la plantilla y pasar los productos y categorías
         return $this->render('productos/lista.html.twig', [
             'productos' => $productos,
+            'categorias' => $categorias,
         ]);
     }
 
@@ -52,4 +75,3 @@ class ProductosController extends AbstractController
         ]);
     }
 }
-

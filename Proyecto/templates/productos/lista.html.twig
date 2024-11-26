@@ -2,57 +2,107 @@
 
 {% block body %}
     <div class="container">
-        <h1 class="page-title">Lista de Productos</h1>
+        <div class="row">
+            <!-- Filtro lateral (izquierda) -->
+            <div class="col-md-3">
+                <div class="filter-sidebar card p-3">
+                    <h5 class="card-title">Filtros</h5>
+                    
+                    <!-- Filtro de Ofertas -->
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="ofertas" id="ofertas" {% if app.request.get('ofertas') %}checked{% endif %}>
+                        <label class="form-check-label" for="ofertas">
+                            Ofertas
+                        </label>
+                    </div>
 
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nombre</th>
-                        <th>Descripción</th>
-                        <th>Precio</th>
-                        <th>Stock</th>
-                        <th>Categoría</th>
-                        <th>Imagen</th>
-                        <th>Acciones</th> <!-- Nueva columna de acciones -->
-                    </tr>
-                </thead>
-                <tbody>
-                    {% if productos is empty %}
-                        <tr>
-                            <td colspan="8">No hay productos disponibles.</td>
-                        </tr>
-                    {% else %}
-                        {% for producto in productos %}
+<!-- Filtro de Precio -->
+<div class="form-group">
+    <label for="precio">Precio:</label>
+    <input type="range" class="form-control-range" id="precio" name="precio" min="1" max="10000" step="1" value="{{ app.request.get('precio') or '10000' }}">
+    <div class="d-flex justify-content-between mt-2">
+        <span id="precio_min_value">{{ app.request.get('precio') or '1' }}€</span> - 
+        <span id="precio_max_value">{{ app.request.get('precio') or '10000' }}€</span>
+    </div>
+</div>
+
+
+
+
+                    <!-- Filtro de Categoría -->
+                    <div class="form-group">
+                        <label for="categoria">Categoría:</label>
+                        <select name="categoria" id="categoria" class="form-control">
+                            <option value="">Seleccionar categoría</option>
+                            {% for categoria in categorias %}
+                                <option value="{{ categoria.id }}" {% if categoria.id == app.request.get('categoria') %}selected{% endif %}>
+                                    {{ categoria.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Botón de Filtrar -->
+                    <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+                </div>
+            </div>
+
+            <!-- Productos -->
+            <div class="col-md-9">
+                <h1 class="page-title">Lista de Productos</h1>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
                             <tr>
-                                <td>{{ producto.id }}</td>
-                                <td>{{ producto.name }}</td>
-                                <td>{{ producto.description }}</td>
-                                <td>{{ (producto.price / 100) | number_format(2, '.', '') }}€</td>
-                                <td>{{ producto.stock }}</td>
-                                <td>{{ producto.categoria.name }}</td>
-                                <td>
-                                    {% if producto.imagenUrl %}
-                                        <img src="{{ asset('build/images/' ~ producto.imagenUrl) }}" alt="{{ producto.name }}" width="100">
-                                    {% else %}
-                                        <span>No disponible</span>
-                                    {% endif %}
-                                </td>
-                                <td>
-                                    <!-- Enlace para ver los detalles del producto -->
-                                    <a href="{{ path('app_producto_detalle', { id: producto.id }) }}" class="btn btn-info">
-                                        Ver detalles
-                                    </a>
-                                    <a href="{{ path('app_carrito_agregar', { id: producto.id }) }}" class="btn btn-primary">
-                                        Comprar
-                                    </a>
-                                </td>
+                                <th>#</th>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Precio</th>
+                                <th>Stock</th>
+                                <th>Categoría</th>
+                                <th>Imagen</th>
+                                <th>Acciones</th>
                             </tr>
-                        {% endfor %}
-                    {% endif %}
-                </tbody>
-            </table>
+                        </thead>
+                        <tbody>
+                            {% if productos is empty %}
+                                <tr>
+                                    <td colspan="8">No hay productos disponibles.</td>
+                                </tr>
+                            {% else %}
+                                {% for producto in productos %}
+                                    <tr>
+                                        <td>{{ producto.id }}</td>
+                                        <td>{{ producto.name }}</td>
+                                        <td>{{ producto.description }}</td>
+                                        <td>{{ (producto.price / 100) | number_format(2, '.', '') }}€</td>
+                                        <td>{{ producto.stock }}</td>
+                                        <td>{{ producto.categoria.name }}</td>
+                                        <td>
+                                            {% if producto.imagenUrl %}
+                                                <img src="{{ asset('build/images/' ~ producto.imagenUrl) }}" alt="{{ producto.name }}" width="100">
+                                            {% else %}
+                                                <span>No disponible</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <a href="{{ path('app_producto_detalle', { id: producto.id }) }}" class="btn btn-info">Ver detalles</a>
+                                            <a href="{{ path('app_carrito_agregar', { id: producto.id }) }}" class="btn btn-primary">Comprar</a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('assets/js/price-range.js') }}"></script>
+{% endblock %}
+

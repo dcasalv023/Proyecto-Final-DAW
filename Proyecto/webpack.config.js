@@ -9,6 +9,7 @@ Encore
     .setPublicPath('/build')
     .addEntry('app', './assets/js/app.js')
     .addEntry('productDetail', './assets/js/DetallesProducto.js')
+    .addEntry('price-range', './assets/js/price-range.js')
     .copyFiles({
         from: './assets/images',
         to: 'images/[path][name].[hash:8].[ext]',
