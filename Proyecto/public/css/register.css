@@ -1,47 +1,88 @@
+/* Fondo general */
 body {
-    background-color: #f8f9fa; /* Fondo claro */
-    font-family: Arial, sans-serif;
+    background: linear-gradient(to bottom, #ff9a9e, #fad0c4);
+    font-family: 'Comic Sans MS', cursive, sans-serif;
 }
 
-.card {
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+/* Estilo de la tarjeta */
+.anime-card {
+    background: linear-gradient(to bottom right, #ffc3a0, #ffafbd);
+    border-radius: 20px;
+    padding: 2rem;
+    border: 5px solid #ff6f91;
+    overflow: hidden;
 }
 
-.card-header {
-    font-size: 1.5rem;
+/* Cabecera */
+.anime-card .card-header {
+    background-color: #ff6f91;
+    border-radius: 15px 15px 0 0;
+    padding: 1rem 0;
+    font-size: 1.8rem;
     font-weight: bold;
+    color: #fff;
 }
 
-.card-footer a {
-    color: #007bff;
+/* Botón de registro */
+.anime-btn {
+    background-color: #ff6f91;
+    color: #fff;
+    font-size: 1.3rem;
+    padding: 0.8rem 2rem;
+    border: 2px solid #fff;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+}
+
+.anime-btn:hover {
+    background-color: #fff;
+    color: #ff6f91;
+    transform: scale(1.05);
+    border-color: #ff6f91;
+}
+
+/* Inputs */
+.anime-input {
+    border-radius: 10px;
+    border: 2px solid #ff6f91;
+    padding: 0.6rem 1rem;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.anime-input:focus {
+    border-color: #ff9a9e;
+    box-shadow: 0 0 5px rgba(255, 111, 145, 0.5);
+}
+
+/* Etiquetas */
+.anime-label {
+    font-size: 1.2rem;
+    color: #6b1e4d;
+}
+
+/* Links */
+.anime-link {
+    color: #ff6f91;
+    font-weight: bold;
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
-.card-footer a:hover {
-    color: #0056b3;
+.anime-link:hover {
+    color: #6b1e4d;
     text-decoration: underline;
 }
 
-.btn-primary {
-    background-color: #007bff;
-    border: none;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+/* Checkbox */
+.anime-check {
+    accent-color: #ff6f91;
 }
 
-.btn-primary:hover {
-    background-color: #0056b3;
-    transform: scale(1.02);
-}
-
-.form-control {
-    border-radius: 5px;
-    border: 1px solid #ced4da;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.form-control:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+/* Footer */
+.card-footer {
+    background-color: #ff6f91;
+    border-radius: 0 0 15px 15px;
+    padding: 1rem;
+    color: #fff;
 }

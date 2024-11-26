@@ -10,10 +10,10 @@
 {% block body %}
 <div class="container mt-5">
     <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow-lg">
-                <div class="card-header bg-primary text-white text-center">
-                    <h2>Registro</h2>
+        <div class="col-md-8">
+            <div class="card anime-card shadow-lg">
+                <div class="card-header text-center">
+                    <h2 class="text-white">✨ ¡Únete a la aventura! ✨</h2>
                 </div>
                 <div class="card-body">
                     <!-- Mensajes Flash -->
@@ -24,38 +24,38 @@
                     <!-- Formulario -->
                     {{ form_start(registrationForm, { 'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'} }) }}
 
-                    <div class="mb-3">
-                        {{ form_label(registrationForm.name, "Nombre", {'label_attr': {'class': 'form-label'}}) }}
-                        {{ form_widget(registrationForm.name, {'attr': {'class': 'form-control'}}) }}
+                    <div class="mb-4">
+                        {{ form_label(registrationForm.name, "🌸 Nombre de usuario", {'label_attr': {'class': 'form-label anime-label'}}) }}
+                        {{ form_widget(registrationForm.name, {'attr': {'class': 'form-control anime-input'}}) }}
                         {{ form_errors(registrationForm.name) }}
                     </div>
 
-                    <div class="mb-3">
-                        {{ form_label(registrationForm.email, "Correo electrónico", {'label_attr': {'class': 'form-label'}}) }}
-                        {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+                    <div class="mb-4">
+                        {{ form_label(registrationForm.email, "📧 Correo electrónico", {'label_attr': {'class': 'form-label anime-label'}}) }}
+                        {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control anime-input'}}) }}
                         {{ form_errors(registrationForm.email) }}
                     </div>
 
-                    <div class="mb-3">
-                        {{ form_label(registrationForm.plainPassword, 'Contraseña', {'label_attr': {'class': 'form-label'}}) }}
-                        {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control'}}) }}
+                    <div class="mb-4">
+                        {{ form_label(registrationForm.plainPassword, '🔒 Contraseña', {'label_attr': {'class': 'form-label anime-label'}}) }}
+                        {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control anime-input'}}) }}
                         {{ form_errors(registrationForm.plainPassword) }}
                     </div>
 
-                    <div class="mb-3 form-check">
-                        {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
-                        {{ form_label(registrationForm.agreeTerms, "Acepto los términos y condiciones", {'label_attr': {'class': 'form-check-label'}}) }}
+                    <div class="mb-4 form-check">
+                        {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input anime-check'}}) }}
+                        {{ form_label(registrationForm.agreeTerms, "🎴 Acepto los términos y condiciones", {'label_attr': {'class': 'form-check-label anime-label'}}) }}
                         {{ form_errors(registrationForm.agreeTerms) }}
                     </div>
 
                     <div class="d-grid">
-                        <button type="submit" class="btn btn-primary btn-lg">Registrarse</button>
+                        <button type="submit" class="btn anime-btn">💫 Registrarse</button>
                     </div>
 
                     {{ form_end(registrationForm) }}
                 </div>
                 <div class="card-footer text-center">
-                    <small>¿Ya tienes una cuenta? <a href="{{ path('app_login') }}">Iniciar sesión</a></small>
+                    <small class="text-white">¿Ya tienes una cuenta? <a href="{{ path('app_login') }}" class="anime-link">Iniciar sesión</a></small>
                 </div>
             </div>
         </div>
