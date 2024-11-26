@@ -1,56 +1,59 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!
-<link rel="stylesheet" href="{{ asset('css/login.css') }}">
+{% block title %}
+    Log in!
+    <link rel="stylesheet" href="{{ asset('build/css/login.css') }}">
 {% endblock %}
 
 {% block body %}
-<div class="container d-flex justify-content-center align-items-center min-vh-100" style="background-image: url('/images/anime-background.jpg'); background-size: cover; background-position: center;">
-    <div class="card shadow-lg" style="max-width: 400px; border-radius: 15px; overflow: hidden;">
-        <div class="card-header text-center bg-dark text-white" style="font-family: 'Poppins', sans-serif; font-size: 1.5rem;">
-            <img src="{{ asset('build/images/logo.png') }}" alt="Logo" style="height: 80px;">
-            Welcome to Anime World!
-        </div>
-        <div class="card-body p-4" style="background: rgba(255, 255, 255, 0.9);">
-            <form method="post">
-                {% if error %}
-                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-                {% endif %}
+<div class="min-vh-100 d-flex flex-column" style="background-image: url('{{ asset('build/images/Anime.png') }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+    <div class="container d-flex justify-content-center align-items-center flex-grow-1">
+        <div class="card shadow-lg" style="max-width: 400px; border-radius: 15px; overflow: hidden;">
+            <div class="card-header text-center bg-dark text-white" style="font-family: 'Poppins', sans-serif; font-size: 1.5rem;">
+                <img src="{{ asset('build/images/logo.png') }}" alt="Logo" style="height: 80px;">
+                Bienvenido a GEEKYGEAR EMPORIUM
+            </div>
+            <div class="card-body p-4" style="background: rgba(255, 255, 255, 0.9);">
+                <form method="post">
+                    {% if error %}
+                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
 
-                {% if app.user %}
-                    <div class="mb-3">
-                        You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                    {% if app.user %}
+                        <div class="mb-3">
+                            Has iniciado sesión como {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Cerrar sesión</a>
+                        </div>
+                    {% endif %}
+
+                    <h2 class="text-center mb-4" style="font-family: 'Poppins', sans-serif;">Inicia sesión</h2>
+
+                    <div class="form-group">
+                        <label for="inputEmail" class="form-label" style="font-weight: bold;">Email</label>
+                        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
                     </div>
-                {% endif %}
 
-                <h2 class="text-center mb-4" style="font-family: 'Poppins', sans-serif;">Sign In</h2>
+                    <div class="form-group mt-3">
+                        <label for="inputPassword" class="form-label" style="font-weight: bold;">Contraseña</label>
+                        <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+                    </div>
 
-                <div class="form-group">
-                    <label for="inputEmail" class="form-label" style="font-weight: bold;">Email</label>
-                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-                </div>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
 
-                <div class="form-group mt-3">
-                    <label for="inputPassword" class="form-label" style="font-weight: bold;">Contraseña</label>
-                    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-                </div>
+                    <div class="form-check mt-3">
+                        <input type="checkbox" name="_remember_me" class="form-check-input" id="rememberMe">
+                        <label class="form-check-label" for="rememberMe">Recuérdame</label>
+                    </div>
 
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-                <div class="form-check mt-3">
-                    <input type="checkbox" name="_remember_me" class="form-check-input" id="rememberMe">
-                    <label class="form-check-label" for="rememberMe">Remember me</label>
-                </div>
-
-                <div class="d-grid gap-2 mt-4">
-                    <button class="btn btn-primary btn-lg" type="submit" style="background: #ff6f91; border-color: #ff6f91;">
-                        Sign in
-                    </button>
-                </div>
-            </form>
-        </div>
-        <div class="card-footer text-center bg-dark text-white">
-            <small>Not a member? <a href="#" class="text-warning">Join us!</a></small>
+                    <div class="d-grid gap-2 mt-4">
+                        <button class="btn btn-primary btn-lg" type="submit" style="background: #ff6f91; border-color: #ff6f91;">
+                            Iniciar sesión
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="card-footer text-center bg-dark text-white">
+                <small>No eres otaku? <a href="#" class="text-warning">únete</a></small>
+            </div>
         </div>
     </div>
 </div>

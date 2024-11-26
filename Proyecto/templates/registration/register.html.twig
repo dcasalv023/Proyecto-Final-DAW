@@ -1,62 +1,63 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Registro{% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('css/register.css') }}">
+{% block title %}
+    Registro
+    <link rel="stylesheet" href="{{ asset('build/css/register.css') }}">
 {% endblock %}
 
 {% block body %}
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card anime-card shadow-lg">
-                <div class="card-header text-center">
-                    <h2 class="text-white">✨ ¡Únete a la aventura! ✨</h2>
+<div class="min-vh-100 d-flex flex-column" style="background-image: url('{{ asset('build/images/Anime.png') }}'); background-size: cover; background-position: center; background-repeat: no-repeat;">
+    <div class="container d-flex justify-content-center align-items-center flex-grow-1">
+        <div class="card shadow-lg" style="max-width: 400px; border-radius: 15px; overflow: hidden;">
+            <div class="card-header text-center bg-dark text-white" style="font-family: 'Poppins', sans-serif; font-size: 1.5rem;">
+                <img src="{{ asset('build/images/logo.png') }}" alt="Logo" style="height: 80px;">
+                Bienvenido a GEEKYGEAR EMPORIUM
+            </div>
+            <div class="card-body p-4" style="background: rgba(255, 255, 255, 0.9);">
+                <!-- Flash Messages -->
+                {% for flash_error in app.flashes('verify_email_error') %}
+                    <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+                {% endfor %}
+
+                <!-- Registration Form -->
+                {{ form_start(registrationForm, { 'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'} }) }}
+
+                <h2 class="text-center mb-4" style="font-family: 'Poppins', sans-serif;">ÚNETE!!!</h2>
+
+                <div class="form-group">
+                    {{ form_label(registrationForm.name, "🌸 Nombre de usuario", {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(registrationForm.name, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(registrationForm.name) }}
                 </div>
-                <div class="card-body">
-                    <!-- Mensajes Flash -->
-                    {% for flash_error in app.flashes('verify_email_error') %}
-                        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-                    {% endfor %}
 
-                    <!-- Formulario -->
-                    {{ form_start(registrationForm, { 'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'} }) }}
-
-                    <div class="mb-4">
-                        {{ form_label(registrationForm.name, "🌸 Nombre de usuario", {'label_attr': {'class': 'form-label anime-label'}}) }}
-                        {{ form_widget(registrationForm.name, {'attr': {'class': 'form-control anime-input'}}) }}
-                        {{ form_errors(registrationForm.name) }}
-                    </div>
-
-                    <div class="mb-4">
-                        {{ form_label(registrationForm.email, "📧 Correo electrónico", {'label_attr': {'class': 'form-label anime-label'}}) }}
-                        {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control anime-input'}}) }}
-                        {{ form_errors(registrationForm.email) }}
-                    </div>
-
-                    <div class="mb-4">
-                        {{ form_label(registrationForm.plainPassword, '🔒 Contraseña', {'label_attr': {'class': 'form-label anime-label'}}) }}
-                        {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control anime-input'}}) }}
-                        {{ form_errors(registrationForm.plainPassword) }}
-                    </div>
-
-                    <div class="mb-4 form-check">
-                        {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input anime-check'}}) }}
-                        {{ form_label(registrationForm.agreeTerms, "🎴 Acepto los términos y condiciones", {'label_attr': {'class': 'form-check-label anime-label'}}) }}
-                        {{ form_errors(registrationForm.agreeTerms) }}
-                    </div>
-
-                    <div class="d-grid">
-                        <button type="submit" class="btn anime-btn">💫 Registrarse</button>
-                    </div>
-
-                    {{ form_end(registrationForm) }}
+                <div class="form-group mt-3">
+                    {{ form_label(registrationForm.email, "📧 Email", {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(registrationForm.email) }}
                 </div>
-                <div class="card-footer text-center">
-                    <small class="text-white">¿Ya tienes una cuenta? <a href="{{ path('app_login') }}" class="anime-link">Iniciar sesión</a></small>
+
+                <div class="form-group mt-3">
+                    {{ form_label(registrationForm.plainPassword, '🔒 Contraseña', {'label_attr': {'class': 'form-label'}}) }}
+                    {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(registrationForm.plainPassword) }}
                 </div>
+
+                <div class="form-group mt-3 form-check">
+                    {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input'}}) }}
+                    {{ form_label(registrationForm.agreeTerms, "🎴 Acepto las condiciones", {'label_attr': {'class': 'form-check-label'}}) }}
+                    {{ form_errors(registrationForm.agreeTerms) }}
+                </div>
+
+                <div class="d-grid gap-2 mt-4">
+                    <button class="btn btn-primary btn-lg" type="submit" style="background: #ff6f91; border-color: #ff6f91;">
+                        Register
+                    </button>
+                </div>
+
+                {{ form_end(registrationForm) }}
+            </div>
+            <div class="card-footer text-center bg-dark text-white">
+                <small> Ya eres otaku? <a href="{{ path('app_login') }}" class="text-warning">Inicia sesión</a></small>
             </div>
         </div>
     </div>

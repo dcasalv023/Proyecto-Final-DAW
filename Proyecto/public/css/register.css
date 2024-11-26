@@ -1,88 +1,66 @@
 /* Fondo general */
 body {
-    background: linear-gradient(to bottom, #ff9a9e, #fad0c4);
-    font-family: 'Comic Sans MS', cursive, sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
-/* Estilo de la tarjeta */
-.anime-card {
-    background: linear-gradient(to bottom right, #ffc3a0, #ffafbd);
-    border-radius: 20px;
-    padding: 2rem;
-    border: 5px solid #ff6f91;
-    overflow: hidden;
-}
-
-/* Cabecera */
-.anime-card .card-header {
-    background-color: #ff6f91;
-    border-radius: 15px 15px 0 0;
-    padding: 1rem 0;
-    font-size: 1.8rem;
-    font-weight: bold;
-    color: #fff;
-}
-
-/* Botón de registro */
-.anime-btn {
-    background-color: #ff6f91;
-    color: #fff;
-    font-size: 1.3rem;
-    padding: 0.8rem 2rem;
-    border: 2px solid #fff;
+/* Tarjeta */
+.card {
     border-radius: 15px;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Cabecera de la tarjeta */
+.card-header {
+    background-color: #ff6f91;
+    color: white;
+    padding: 20px;
+    font-weight: bold;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+/* Botón principal */
+.btn-primary {
+    background-color: #ff6f91;
+    border-color: #ff6f91;
     transition: all 0.3s ease;
 }
 
-.anime-btn:hover {
-    background-color: #fff;
-    color: #ff6f91;
+.btn-primary:hover {
+    background-color: #ff9a9e;
+    border-color: #ff9a9e;
     transform: scale(1.05);
-    border-color: #ff6f91;
 }
 
 /* Inputs */
-.anime-input {
+.form-control {
     border-radius: 10px;
     border: 2px solid #ff6f91;
-    padding: 0.6rem 1rem;
+    padding: 10px;
     font-size: 1rem;
     transition: all 0.3s ease;
 }
 
-.anime-input:focus {
+.form-control:focus {
     border-color: #ff9a9e;
-    box-shadow: 0 0 5px rgba(255, 111, 145, 0.5);
-}
-
-/* Etiquetas */
-.anime-label {
-    font-size: 1.2rem;
-    color: #6b1e4d;
-}
-
-/* Links */
-.anime-link {
-    color: #ff6f91;
-    font-weight: bold;
-    text-decoration: none;
-    transition: color 0.3s ease;
-}
-
-.anime-link:hover {
-    color: #6b1e4d;
-    text-decoration: underline;
+    box-shadow: 0 0 10px rgba(255, 111, 145, 0.5);
 }
 
 /* Checkbox */
-.anime-check {
+.form-check-input {
     accent-color: #ff6f91;
 }
 
-/* Footer */
-.card-footer {
-    background-color: #ff6f91;
-    border-radius: 0 0 15px 15px;
-    padding: 1rem;
-    color: #fff;
+/* Links */
+.text-warning {
+    color: #ff6f91;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.text-warning:hover {
+    color: #6b1e4d;
+    text-decoration: underline;
 }
