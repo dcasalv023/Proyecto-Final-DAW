@@ -8,7 +8,7 @@ Encore
     .setOutputPath('public/build/')
     .setPublicPath('/build')
     .addEntry('app', './assets/js/app.js')
-    .addEntry('productDetail', './assets/js/DetallesProducto.js')
+    .addEntry('DetallesProducto', './assets/js/DetallesProducto.js')
     .addEntry('price-range', './assets/js/price-range.js')
     .copyFiles({
         from: './assets/images',

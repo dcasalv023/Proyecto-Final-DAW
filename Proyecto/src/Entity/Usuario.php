@@ -40,9 +40,18 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $imagePerfil = null;
 
+    #[ORM\OneToMany(mappedBy: 'usuario', targetEntity: ListaDeseos::class, cascade: ['persist', 'remove'])]
+    private Collection $listasDeseos;
+
+    #[ORM\OneToMany(mappedBy: 'usuario', targetEntity: Orden::class, cascade: ['persist', 'remove'])]
+    private Collection $ordenes;
+
     public function __construct()
     {
         $this->carritos = new ArrayCollection();
+        $this->listasDeseos = new ArrayCollection();
+        $this->ordenes = new ArrayCollection();
+
         if (!in_array('ROLE_USER', $this->roles)) {
             $this->roles[] = 'ROLE_USER';
         }
@@ -148,6 +157,50 @@ class Usuario implements UserInterface, PasswordAuthenticatedUserInterface
     public function setImagePerfil(?string $imagePerfil): self
     {
         $this->imagePerfil = $imagePerfil;
+        return $this;
+    }
+
+    public function getListasDeseos(): Collection
+    {
+        return $this->listasDeseos;
+    }
+
+    public function addListaDeseos(ListaDeseos $listaDeseos): self
+    {
+        if (!$this->listasDeseos->contains($listaDeseos)) {
+            $this->listasDeseos->add($listaDeseos);
+            $listaDeseos->setUsuario($this);
+        }
+        return $this;
+    }
+
+    public function removeListaDeseos(ListaDeseos $listaDeseos): self
+    {
+        if ($this->listasDeseos->removeElement($listaDeseos) && $listaDeseos->getUsuario() === $this) {
+            $listaDeseos->setUsuario(null);
+        }
+        return $this;
+    }
+
+    public function getOrdenes(): Collection
+    {
+        return $this->ordenes;
+    }
+
+    public function addOrden(Orden $orden): self
+    {
+        if (!$this->ordenes->contains($orden)) {
+            $this->ordenes->add($orden);
+            $orden->setUsuario($this);
+        }
+        return $this;
+    }
+
+    public function removeOrden(Orden $orden): self
+    {
+        if ($this->ordenes->removeElement($orden) && $orden->getUsuario() === $this) {
+            $orden->setUsuario(null);
+        }
         return $this;
     }
 

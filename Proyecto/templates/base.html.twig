@@ -67,7 +67,6 @@
 
     <!-- Scripts -->
     {% block javascripts %}
-        {{ parent() }}  <!-- Llama a los scripts definidos en los templates hijos -->
         {{ encore_entry_script_tags('app') }}
         {{ encore_entry_script_tags('DetallesProducto') }}
         {{ encore_entry_script_tags('price-range') }}
