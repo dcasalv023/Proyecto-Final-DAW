@@ -1,32 +1,28 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Obtener el control deslizante de precio
     const precioRange = document.getElementById("precio");
     const precioMinValue = document.getElementById("precio_min_value");
     const precioMaxValue = document.getElementById("precio_max_value");
 
-    // Función para actualizar los valores de los precios en el rango
+    // Función para actualizar el rango de precios en la interfaz y en la URL
     function updatePriceRange() {
         const precio = precioRange.value;
 
-        // Actualizar los valores mostrados del precio mínimo y máximo
-        precioMinValue.innerHTML = `${precio}€`;
-        precioMaxValue.innerHTML = `${precio}€`;
+        // Actualizar la etiqueta del precio máximo
+        precioMaxValue.innerText = `${precio}€`;
 
-        // Actualizar la URL con el nuevo valor de precio
+        // Actualizar la URL con el nuevo valor
         const url = new URL(window.location.href);
-
-        // Establecemos el parámetro de precio en la URL
-        url.searchParams.set('precio', precio); 
-
-        // Realizar la redirección para filtrar los productos con el nuevo parámetro
-        window.history.replaceState({}, '', url); // Esto no recarga la página pero actualiza la URL
+        url.searchParams.set('precio', precio);
+        window.history.replaceState({}, '', url);
     }
 
-    // Establecer el valor inicial del control deslizante
-    const initialValue = precioRange.value;
-    precioMinValue.innerHTML = `${initialValue}€`;
-    precioMaxValue.innerHTML = `${initialValue}€`;
+    // Inicializar el control deslizante con el valor actual
+    if (precioRange) {
+        const initialValue = precioRange.value;
+        precioMaxValue.innerText = `${initialValue}€`;
+        precioMinValue.innerText = `${precioRange.min}€`;
 
-    // Escuchar el evento de cambio en el control deslizante
-    precioRange.addEventListener("input", updatePriceRange);
+        // Escuchar cambios en el control deslizante
+        precioRange.addEventListener("input", updatePriceRange);
+    }
 });

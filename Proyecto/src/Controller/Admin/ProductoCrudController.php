@@ -21,16 +21,17 @@ class ProductoCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('id')->hideOnForm(), // El ID no debe ser editable
+            IdField::new('id')->hideOnForm(),
             TextField::new('Name', 'Name'),
             TextField::new('Description', 'Descripción'),
             MoneyField::new('price', 'Precio')->setCurrency('EUR'),
             IntegerField::new('Stock', 'Stock'),
             ImageField::new('imagenUrl', 'Imagen')
-                ->setBasePath('/assets/images') // Definir la carpeta base para las imágenes
-                ->setUploadDir('public/build/images') // Definir el directorio para subir imágenes
-                ->setRequired(false),
-            AssociationField::new('categoria', 'Categoría') // Relación con la entidad Categoria
+                // Asegurarte de que el archivo se sube a la carpeta correcta
+                ->setBasePath('uploads/images') // Esto es la ruta base que el navegador usará
+                ->setUploadDir('public/uploads/images') // Esto define el directorio en el servidor
+                ->setRequired(false), // Si la imagen no es obligatoria
+            AssociationField::new('categoria', 'Categoría')
         ];
     }
 }
