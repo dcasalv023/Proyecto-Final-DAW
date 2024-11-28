@@ -1,17 +1,18 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    <link rel="stylesheet" href="{{ asset('css/carousel.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/nav.css') }}">
+    <title>Productos</title>
 {% endblock %}
 
 {% block body %}
-<div class="container">
+<div class="container mt-5">
     <div class="row">
         <!-- Filtro lateral -->
         <div class="col-md-3">
             <form method="get" action="{{ path('app_productos') }}">
-                <div class="filter-sidebar card p-3">
-                    <h5 class="card-title">Filtros</h5>
+                <div class="filter-sidebar card p-3 shadow-sm">
+                    <h5 class="card-title text-center">Filtros</h5>
 
                     <!-- Filtro de Ofertas -->
                     <div class="form-check">
@@ -36,7 +37,7 @@
                             name="precio" 
                             min="{{ minPrice }}" 
                             max="{{ maxPrice }}" 
-                            value="{{ app.request.get('precio') or maxPrice }}">
+                            value="{{ selectedPrecio }}">
                         <div class="d-flex justify-content-between mt-2">
                             <span id="precio_min_value">{{ minPrice }}€</span>
                             <span id="precio_max_value">{{ app.request.get('precio') or maxPrice }}€</span>
@@ -49,43 +50,75 @@
                         <select name="categoria" id="categoria" class="form-control">
                             <option value="">Seleccionar categoría</option>
                             {% for categoria in categorias %}
-                                <option value="{{ categoria.id }}" {% if categoria.id == app.request.get('categoria') %}selected{% endif %}>
+                                <option value="{{ categoria.id }}" {% if categoria.id == selectedCategoria %}selected{% endif %}>
                                     {{ categoria.name }}
                                 </option>
                             {% endfor %}
                         </select>
                     </div>
 
+                    <!-- Filtro de Búsqueda -->
+                    <div class="form-group mt-3">
+                        <label for="buscar">Buscar productos:</label>
+                        <input type="text" name="buscar" id="buscar" class="form-control" placeholder="Buscar..." value="{{ buscar }}">
+                    </div>
+
                     <!-- Botón de Filtrar -->
                     <button type="submit" class="btn btn-primary w-100 mt-3">Filtrar</button>
                 </div>
             </form>
+
+            <!-- Sección de categorías destacadas -->
+            <div class="mt-4">
+                <h5 class="text-center">Categorías destacadas</h5>
+                <ul class="list-group">
+                    {% for categoria in categorias %}
+                        <li class="list-group-item">
+                            <a href="{{ path('app_productos', {'categoria': categoria.id}) }}">{{ categoria.name }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Banner promocional (opcional) -->
+            <div class="mt-4">
+                <div class="card shadow-sm">
+                    <img src="{{ asset('images/banner-promocional.jpg') }}" class="card-img-top" alt="Promoción especial">
+                    <div class="card-body">
+                        <p class="card-text text-center text-primary">¡Aprovecha nuestras ofertas exclusivas!</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- Carrusel de productos -->
         <div class="col-md-9">
-            <h1 class="page-title">Lista de Productos</h1>
+            <h1 class="page-title text-center mb-4">Lista de Productos</h1>
+
+            {% if productosPorCategoria is empty %}
+                <p class="text-muted text-center">No hay productos que coincidan con los filtros seleccionados.</p>
+            {% endif %}
 
             {% for categoria, productos in productosPorCategoria %}
-                <h2>{{ categoria }}</h2>
-                <div id="carousel{{ categoria }}" class="carousel slide" data-bs-ride="carousel">
+                <h2 class="text-center mb-3">{{ categoria }}</h2>
+                <div id="carousel{{ categoria|replace({' ': ''}) }}" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         {% set productChunks = productos|batch(5) %}
                         {% for chunk in productChunks %}
                             <div class="carousel-item {% if loop.first %}active{% endif %}">
                                 <div class="d-flex justify-content-start">
                                     {% for producto in chunk %}
-                                        <div class="text-center mx-2" style="min-width: 150px;">
+                                        <div class="text-center mx-3 mb-3" style="min-width: 150px;">
                                             {% if producto.imagenUrl %}
                                                 <img src="{{ asset('uploads/images/' ~ producto.imagenUrl) }}" 
-                                                    class="rounded" 
-                                                    alt="{{ producto.name }}" 
-                                                    style="max-width: 100px; height: auto; object-fit: contain;">
+                                                     class="d-block w-100 rounded" 
+                                                     alt="{{ producto.name }}" 
+                                                     style="max-height: 200px; object-fit: contain;">
                                             {% else %}
-                                                <img src="https://via.placeholder.com/100x100?text=No+Image" 
-                                                    class="rounded" 
-                                                    alt="Imagen no disponible" 
-                                                    style="max-width: 100px; height: auto; object-fit: contain;">
+                                                <img src="https://via.placeholder.com/200x200?text=No+Image" 
+                                                     class="d-block w-100 rounded" 
+                                                     alt="Imagen no disponible" 
+                                                     style="max-height: 200px; object-fit: contain;">
                                             {% endif %}
                                             <h6 class="mt-2">{{ producto.name }}</h6>
                                             <p class="text-success fw-bold">
@@ -100,14 +133,16 @@
                     </div>
 
                     <!-- Controles de navegación (flechas) -->
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ categoria }}" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: black;"></span>
-                        <span class="visually-hidden">Anterior</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ categoria }}" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: black;"></span>
-                        <span class="visually-hidden">Siguiente</span>
-                    </button>
+                    <div class="carousel-controls">
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carousel{{ categoria|replace({' ': ''}) }}" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true" style="background-color: black;"></span>
+                            <span class="visually-hidden">Anterior</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carousel{{ categoria|replace({' ': ''}) }}" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true" style="background-color: black;"></span>
+                            <span class="visually-hidden">Siguiente</span>
+                        </button>
+                    </div>
                 </div>
             {% endfor %}
         </div>

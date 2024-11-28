@@ -1,7 +1,5 @@
 <?php
 
-// src/Controller/ProductosController.php
-
 namespace App\Controller;
 
 use App\Entity\Producto;
@@ -25,8 +23,10 @@ class ProductosController extends AbstractController
     public function lista(Request $request): Response
     {
         // Obtén los parámetros de filtro
-        $categoriaId = $request->query->get('categoria');
-        $precio = $request->query->get('precio');
+        $categoriaId = $request->query->get('categoria'); // Parámetro para categoría seleccionada
+        $precio = $request->query->get('precio'); // Parámetro para rango de precio
+        $ofertas = $request->query->get('ofertas'); // Parámetro para filtrar por ofertas
+        $buscar = $request->query->get('buscar'); // Parámetro de búsqueda por nombre
 
         // Obtener todas las categorías
         $categorias = $this->entityManager->getRepository(Categoria::class)->findAll();
@@ -34,54 +34,121 @@ class ProductosController extends AbstractController
         // Crear un array para almacenar los productos por categoría
         $productosPorCategoria = [];
 
-        // Para cada categoría, obtenemos los productos asociados
-        foreach ($categorias as $categoria) {
-            $queryBuilder = $this->entityManager->getRepository(Producto::class)->createQueryBuilder('p');
-            
-            // Filtrar por categoría
-            $queryBuilder->andWhere('p.categoria = :categoria')
-                         ->setParameter('categoria', $categoria->getId());
-            
-            // Filtrar por precio si está definido
-            if ($precio) {
-                $queryBuilder->andWhere('p.price <= :precio')
-                             ->setParameter('precio', $precio * 100); // Convertir a centavos
-            }
+        // Crear un queryBuilder base para calcular el rango de precios
+        $queryBuilder = $this->entityManager->getRepository(Producto::class)->createQueryBuilder('p');
 
-            // Ejecutar la consulta y almacenar los productos por categoría
-            $productosPorCategoria[$categoria->getName()] = $queryBuilder->getQuery()->getResult();
+        // Filtrar por categoría si aplica
+        if ($categoriaId) {
+            $queryBuilder->andWhere('p.categoria = :categoria')
+                         ->setParameter('categoria', $categoriaId);
         }
 
-        // Consultar precios mínimo y máximo de todos los productos
-        $priceStats = $this->entityManager->getRepository(Producto::class)
-            ->createQueryBuilder('p')
-            ->select('MIN(p.price) AS minPrice, MAX(p.price) AS maxPrice')
-            ->getQuery()
-            ->getSingleResult();
+        // Filtrar por ofertas si aplica
+        if ($ofertas) {
+            $queryBuilder->andWhere('p.oferta = :oferta')
+                         ->setParameter('oferta', true);
+        }
 
-        $minPrice = $priceStats['minPrice'] / 100; // Convertir de centavos a euros
-        $maxPrice = $priceStats['maxPrice'] / 100;
+        // Filtrar por búsqueda de nombre si aplica
+        if ($buscar) {
+            $queryBuilder->andWhere('p.name LIKE :buscar')
+                         ->setParameter('buscar', '%' . $buscar . '%');
+        }
+
+        // Obtener los valores mínimo y máximo de precios según los filtros actuales
+        $priceStats = $queryBuilder->select('MIN(p.price) AS minPrice, MAX(p.price) AS maxPrice')
+                                   ->getQuery()
+                                   ->getSingleResult();
+
+        $minPrice = isset($priceStats['minPrice']) ? $priceStats['minPrice'] / 100 : 0; // Convertir de centavos a euros
+        $maxPrice = isset($priceStats['maxPrice']) ? $priceStats['maxPrice'] / 100 : 0;
+
+        // Si el filtro de precio está vacío o inválido, usar el rango recalculado
+        $precio = $precio ? min($precio, $maxPrice) : $maxPrice;
+
+        // Filtrar por precio si aplica
+        if ($precio) {
+            $queryBuilder->andWhere('p.price <= :precio')
+                         ->setParameter('precio', $precio * 100); // Convertir a centavos
+        }
+
+        // Si se selecciona una categoría, obtener los productos de esa categoría
+        if ($categoriaId) {
+            // Obtener productos de una categoría específica
+            $categoria = $this->entityManager->getRepository(Categoria::class)->find($categoriaId);
+            if ($categoria) {
+                $queryBuilder = $this->entityManager->getRepository(Producto::class)->createQueryBuilder('p');
+                $queryBuilder->andWhere('p.categoria = :categoria')
+                             ->setParameter('categoria', $categoriaId);
+
+                if ($precio) {
+                    $queryBuilder->andWhere('p.price <= :precio')
+                                 ->setParameter('precio', $precio * 100); // Convertir a centavos
+                }
+
+                if ($ofertas) {
+                    $queryBuilder->andWhere('p.oferta = :oferta')
+                                 ->setParameter('oferta', true);
+                }
+
+                if ($buscar) {
+                    $queryBuilder->andWhere('p.name LIKE :buscar')
+                                 ->setParameter('buscar', '%' . $buscar . '%');
+                }
+
+                $productosPorCategoria[$categoria->getName()] = $queryBuilder->getQuery()->getResult();
+            }
+        } else {
+            // Si no se selecciona categoría, mostrar productos organizados por categoría
+            foreach ($categorias as $categoria) {
+                $queryBuilder = $this->entityManager->getRepository(Producto::class)->createQueryBuilder('p');
+                $queryBuilder->andWhere('p.categoria = :categoria')
+                             ->setParameter('categoria', $categoria->getId());
+
+                if ($precio) {
+                    $queryBuilder->andWhere('p.price <= :precio')
+                                 ->setParameter('precio', $precio * 100);
+                }
+
+                if ($ofertas) {
+                    $queryBuilder->andWhere('p.oferta = :oferta')
+                                 ->setParameter('oferta', true);
+                }
+
+                if ($buscar) {
+                    $queryBuilder->andWhere('p.name LIKE :buscar')
+                                 ->setParameter('buscar', '%' . $buscar . '%');
+                }
+
+                $productosPorCategoria[$categoria->getName()] = $queryBuilder->getQuery()->getResult();
+            }
+        }
 
         return $this->render('productos/lista.html.twig', [
             'productosPorCategoria' => $productosPorCategoria, // Productos organizados por categoría
             'categorias' => $categorias,
             'minPrice' => $minPrice,
             'maxPrice' => $maxPrice,
+            'selectedCategoria' => $categoriaId, // Enviar la categoría seleccionada al template
+            'selectedPrecio' => $precio, // Precio actualmente seleccionado
+            'buscar' => $buscar, // Valor de la búsqueda
         ]);
     }
 
     #[Route("/producto/{id}", name: "app_producto_detalle")]
     public function detalle(int $id): Response
     {
+        // Obtener el producto por su ID
         $producto = $this->entityManager->getRepository(Producto::class)->find($id);
 
+        // Si no se encuentra, lanzar una excepción
         if (!$producto) {
             throw $this->createNotFoundException('Producto no encontrado');
         }
 
+        // Renderizar la vista del detalle del producto
         return $this->render('productos/producto.html.twig', [
             'producto' => $producto,
         ]);
     }
 }
-

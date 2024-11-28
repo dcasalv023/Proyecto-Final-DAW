@@ -15,6 +15,4 @@ class ProductoRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Producto::class);
     }
-
-    // Método adicional si deseas agregar más filtros complejos, por ejemplo, por nombre, categoría, etc.
 }

@@ -1,40 +1,28 @@
-/* carousel.css */
-.carousel {
-    position: relative;
-    width: 100%;
-    overflow: hidden;
-}
-
-.carousel-inner {
-    display: flex;
-    transition: transform 0.5s ease;
-}
-
-.carousel-item {
-    flex: 0 0 auto;
-    width: 100%;
-}
-
-.carousel-control-prev, .carousel-control-next {
+/* Alineación de los botones de navegación */
+.carousel-controls {
     position: absolute;
     top: 50%;
-    z-index: 1;
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 10px;
-    color: white;
-    font-size: 30px;
-    border: none;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
     transform: translateY(-50%);
+    z-index: 5;
 }
 
-.carousel-control-prev {
-    left: 10px;
-}
-
+.carousel-control-prev,
 .carousel-control-next {
-    right: 10px;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+    border: none;
+    border-radius: 50%;
+    padding: 10px;
 }
 
-.carousel-control-prev-icon, .carousel-control-next-icon {
-    background-color: black;
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: white; /* Iconos de flechas blancos */
+}
+
+/* Evitar que los botones se solapen con los productos */
+.carousel-inner {
+    padding-bottom: 40px; /* Espacio para los botones de control */
 }
