@@ -1,5 +1,7 @@
 <?php
 
+// src/Controller/ProductosController.php
+
 namespace App\Controller;
 
 use App\Entity\Producto;
@@ -22,24 +24,33 @@ class ProductosController extends AbstractController
     #[Route("/productos", name: "app_productos")]
     public function lista(Request $request): Response
     {
+        // Obtén los parámetros de filtro
         $categoriaId = $request->query->get('categoria');
-        $precio = $request->query->get('precio'); // Precio máximo seleccionado
+        $precio = $request->query->get('precio');
 
-        $queryBuilder = $this->entityManager->getRepository(Producto::class)->createQueryBuilder('p');
+        // Obtener todas las categorías
+        $categorias = $this->entityManager->getRepository(Categoria::class)->findAll();
 
-        // Filtrar por categoría
-        if ($categoriaId) {
+        // Crear un array para almacenar los productos por categoría
+        $productosPorCategoria = [];
+
+        // Para cada categoría, obtenemos los productos asociados
+        foreach ($categorias as $categoria) {
+            $queryBuilder = $this->entityManager->getRepository(Producto::class)->createQueryBuilder('p');
+            
+            // Filtrar por categoría
             $queryBuilder->andWhere('p.categoria = :categoria')
-                        ->setParameter('categoria', $categoriaId);
-        }
+                         ->setParameter('categoria', $categoria->getId());
+            
+            // Filtrar por precio si está definido
+            if ($precio) {
+                $queryBuilder->andWhere('p.price <= :precio')
+                             ->setParameter('precio', $precio * 100); // Convertir a centavos
+            }
 
-        // Filtrar por precio
-        if ($precio) {
-            $queryBuilder->andWhere('p.price <= :precio')
-                         ->setParameter('precio', $precio * 100); // Convertimos a centavos
+            // Ejecutar la consulta y almacenar los productos por categoría
+            $productosPorCategoria[$categoria->getName()] = $queryBuilder->getQuery()->getResult();
         }
-
-        $productos = $queryBuilder->getQuery()->getResult();
 
         // Consultar precios mínimo y máximo de todos los productos
         $priceStats = $this->entityManager->getRepository(Producto::class)
@@ -51,10 +62,8 @@ class ProductosController extends AbstractController
         $minPrice = $priceStats['minPrice'] / 100; // Convertir de centavos a euros
         $maxPrice = $priceStats['maxPrice'] / 100;
 
-        $categorias = $this->entityManager->getRepository(Categoria::class)->findAll();
-
         return $this->render('productos/lista.html.twig', [
-            'productos' => $productos,
+            'productosPorCategoria' => $productosPorCategoria, // Productos organizados por categoría
             'categorias' => $categorias,
             'minPrice' => $minPrice,
             'maxPrice' => $maxPrice,
@@ -75,3 +84,4 @@ class ProductosController extends AbstractController
         ]);
     }
 }
+

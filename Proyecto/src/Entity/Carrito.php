@@ -1,5 +1,7 @@
 <?php
 
+// src/Entity/Carrito.php
+
 namespace App\Entity;
 
 use App\Repository\CarritoRepository;
@@ -21,9 +23,9 @@ class Carrito
     #[ORM\JoinColumn(nullable: false)]
     private ?Usuario $usuario = null;
 
-    // Relación muchos a uno con Producto
+    // Relación muchos a uno con Producto, con cascada en eliminación
     #[ORM\ManyToOne(targetEntity: Producto::class, inversedBy: 'carritos')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: false, onDelete: 'CASCADE')]  // Agregado 'onDelete="CASCADE"'
     private ?Producto $producto = null;
 
     public function getId(): ?int
@@ -64,3 +66,4 @@ class Carrito
         return $this;
     }
 }
+
