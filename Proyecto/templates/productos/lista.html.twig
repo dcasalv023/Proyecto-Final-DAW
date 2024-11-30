@@ -1,8 +1,10 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    <link rel="stylesheet" href="{{ asset('css/nav.css') }}">
-    <title>Productos</title>
+
+    <link rel="stylesheet" href="{{ asset('build/css/carousel.css') }}">
+
+>>>>>>> 7490de9 (lista)
 {% endblock %}
 
 {% block body %}
@@ -111,14 +113,14 @@
                                         <div class="text-center mx-3 mb-3" style="min-width: 150px;">
                                             {% if producto.imagenUrl %}
                                                 <img src="{{ asset('uploads/images/' ~ producto.imagenUrl) }}" 
-                                                     class="d-block w-100 rounded" 
-                                                     alt="{{ producto.name }}" 
-                                                     style="max-height: 200px; object-fit: contain;">
+                                                    class="d-block w-100 rounded" 
+                                                    alt="{{ producto.name }}" 
+                                                    style="max-height: 200px; object-fit: contain;">
                                             {% else %}
                                                 <img src="https://via.placeholder.com/200x200?text=No+Image" 
-                                                     class="d-block w-100 rounded" 
-                                                     alt="Imagen no disponible" 
-                                                     style="max-height: 200px; object-fit: contain;">
+                                                    class="d-block w-100 rounded" 
+                                                    alt="Imagen no disponible" 
+                                                    style="max-height: 200px; object-fit: contain;">
                                             {% endif %}
                                             <h6 class="mt-2">{{ producto.name }}</h6>
                                             <p class="text-success fw-bold">
