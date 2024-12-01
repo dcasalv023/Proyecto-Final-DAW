@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Editar Perfil{% endblock %}
+
+{% block body %}
+<style>
+    .edit-profile-container {
+        max-width: 600px;
+        margin: 2em auto;
+        padding: 2em;
+        background: linear-gradient(to bottom right, #f9f9f9, #e9f5ff);
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .edit-profile-container h1 {
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: #333;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+        color: #555;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 0.8em;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        font-size: 1rem;
+    }
+
+    .form-group input:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    .btn-primary {
+        display: block;
+        width: 100%;
+        padding: 0.8em;
+        font-size: 1.1rem;
+        color: #fff;
+        background: #007bff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-transform: uppercase;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-primary:hover {
+        background: #0056b3;
+        transform: scale(1.02);
+    }
+</style>
+
+<div class="edit-profile-container">
+    <h1>Editar Perfil</h1>
+    {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_label(form.name, 'Nombre') }}
+            {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.email, 'Correo Electrónico') }}
+            {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        {{ form_widget(form.save, {'attr': {'class': 'btn-primary'}}) }}
+    {{ form_end(form) }}
+</div>
+{% endblock %}

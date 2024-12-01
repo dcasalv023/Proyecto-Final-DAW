@@ -1,20 +1,120 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello TiendaController!{% endblock %}
+{% block title %}Inicio - Tienda de Anime{% endblock %}
 
 {% block body %}
 <style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    .header-section {
+        position: relative;
+        height: 100vh; /* Ajusta la altura al 100% de la pantalla */
+        background: url('{{ asset('images/Fondo.png') }}') no-repeat center center/cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-align: center;
+    }
+
+    .header-section h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+    }
+
+    .header-section .btn {
+        margin-top: 1em;
+        padding: 0.8em 2em;
+        background-color: #ffcc00;
+        color: #000;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.2rem;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+
+    .header-section .btn:hover {
+        background-color: #e6b800;
+    }
+
+    .content-section {
+        padding: 2em;
+        background-color: #f9f9f9;
+    }
+
+    .content-section h2 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 1.5em;
+    }
+
+    .content-section .discover-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5em;
+    }
+
+    .discover-grid .card {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        overflow: hidden;
+        text-align: center;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .discover-grid .card img {
+        width: 100%;
+        height: auto;
+    }
+
+    .discover-grid .card h3 {
+        margin: 0.5em 0;
+        color: #444;
+    }
+
+    .discover-grid .card p {
+        padding: 0 1em 1em;
+        color: #666;
+    }
+
+    .btn-history {
+        display: inline-block;
+        margin-top: 1em;
+        padding: 0.8em 2em;
+        background-color: #ffcc00;
+        color: #000;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.2rem;
+        text-decoration: none;
+        transition: background-color 0.3s;
+    }
+
+    .btn-history:hover {
+        background-color: #e6b800;
+    }
 </style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<div class="header-section">
+    <div>
+        <h1>Bienvenidos a nuestra tienda de anime</h1>
+        <a href="{{ path('app_productos') }}" class="btn">Visita la tienda</a>
+    </div>
+</div>
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>C:/Users/pract/Documents/Proyecto-Final-DAW/Proyecto/src/Controller/TiendaController.php</code></li>
-        <li>Your template at <code>C:/Users/pract/Documents/Proyecto-Final-DAW/Proyecto/templates/tienda/index.html.twig</code></li>
-    </ul>
+<div id="descubriendo-Akikaze" class="content-section">
+    <h2>Descubriendo Akikaze</h2>
+    <div class="discover-grid">
+        <div class="card">
+            <a href="{{ path('app_historia') }}">
+                <img src="{{ asset('images/Akikaze.png') }}" alt="Nuestra Historia">
+                <h3>Nuestra Historia</h3>
+                <p>Conoce al equipo de Akikaze y nuestra historia.</p>
+            </a>
+            <!-- Botón debajo de la foto -->
+            <a href="{{ path('app_historia') }}" class="btn-history">Nuestra Historia</a>
+        </div>
+    </div>
 </div>
 {% endblock %}

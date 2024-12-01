@@ -1,0 +1,192 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nuestra Historia - Tienda de Anime{% endblock %}
+
+{% block body %}
+<style>
+    /* Estilos para la cabecera */
+    .header-section {
+        position: relative;
+        height: 100vh;
+        background: url('{{ asset('images/Fondo.png') }}') no-repeat center center/cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-align: center;
+        box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.6);
+    }
+
+    .header-section h1 {
+        font-size: 3rem;
+        font-weight: bold;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        color: #fff;
+    }
+
+    .content-section {
+        padding: 4em 2em;
+        background-color: #f5f5f5;
+        text-align: center;
+    }
+
+    .content-section h2 {
+        font-size: 2.5rem;
+        color: #333;
+        margin-bottom: 1em;
+        text-transform: uppercase;
+        font-family: 'Arial', sans-serif;
+    }
+
+    /* Estilo para los detalles de la historia */
+    .history-details {
+        max-width: 900px;
+        margin: 0 auto;
+        text-align: justify;
+        font-size: 1.1rem;
+        color: #555;
+        line-height: 1.6;
+    }
+
+    /* Imagen rectangular para la historia */
+    .history-details img {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        margin-bottom: 1.5em;
+        border-radius: 10px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .history-details p {
+        margin-bottom: 1.5em;
+    }
+
+    /* Estilo para los bloques de contenido */
+    .content-block {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin: 2em 0;
+    }
+
+    .content-block img {
+        width: 40%;
+        border-radius: 10px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .content-block div {
+        width: 55%;
+        text-align: left;
+        padding: 1em;
+        background-color: #fff;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+
+    /* Sección de llamada a la acción */
+    .action-btn {
+        margin-top: 2em;
+        padding: 1em 2em;
+        background-color: #ffcc00;
+        color: #000;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.2rem;
+        text-decoration: none;
+        display: inline-block;
+        transition: background-color 0.3s, transform 0.3s;
+    }
+
+    .action-btn:hover {
+        background-color: #e6b800;
+        transform: scale(1.1);
+    }
+
+    /* Sección de equipo */
+    .team-section {
+        margin: 4em 0;
+        background-color: #e5e5e5;
+        padding: 3em 2em;
+        border-radius: 10px;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .team-section h3 {
+        text-align: center;
+        font-size: 2rem;
+        color: #333;
+        margin-bottom: 2em;
+    }
+
+    .team-members {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+    }
+
+    .team-member {
+        text-align: center;
+        width: 250px;
+        margin-bottom: 2em;
+    }
+
+    .team-member img {
+        border-radius: 50%;
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+    }
+
+    .team-member h4 {
+        font-size: 1.2rem;
+        color: #333;
+        margin-top: 1em;
+    }
+
+</style>
+
+<!-- Sección de cabecera con el título de la página -->
+<div class="header-section">
+    <div>
+        <h1>Conoce nuestra historia</h1>
+    </div>
+</div>
+
+<!-- Sección de contenido con la historia de la tienda -->
+<div class="content-section">
+    <h2>La historia de Akikaze</h2>
+    <div class="history-details">
+        <img src="{{ asset('images/Akiha.png') }}" alt="Nuestra Historia">
+        <p><strong>Akikaze</strong> nació del deseo de crear algo único, inspirado por la cultura japonesa, el anime y el manga. Como todos los grandes proyectos, nuestra historia comenzó con una simple idea: ¿por qué no juntar todo lo que amamos y compartirlo con aquellos que sienten lo mismo?</p>
+        
+        <p>Desde jóvenes, el anime y el manga fueron nuestras ventanas a mundos fantásticos. Series como <em>Dragon Ball</em>, <em>Naruto</em>, y <em>One Piece</em> no solo nos entretuvieron, sino que también nos enseñaron valores como la amistad, el sacrificio y la perseverancia. Fue esa misma pasión por estas historias lo que nos impulsó a crear <strong>Akikaze</strong>, un lugar donde los fans pudieran encontrar productos exclusivos, figuras de colección y lo mejor del mundo otaku.</p>
+
+        <div class="content-block">
+            <img src="{{ asset('images/Santuario.png') }}" alt="Cultura japonesa">
+            <div>
+                <h3>Viento de Otoño - Akikaze</h3>
+                <p>El nombre <strong>Akikaze</strong> proviene de una palabra japonesa que significa "viento de otoño". Este viento simboliza la frescura, la renovación y el cambio de estaciones, lo que refleja nuestra visión de la tienda: ofrecer siempre algo nuevo, fresco y emocionante. Queremos ser como el viento que trae consigo nuevas experiencias, ¡y qué mejor forma de hacerlo que con productos que hacen latir más rápido el corazón de los fans del anime!</p>
+            </div>
+        </div>
+
+        <div class="content-block">
+            <div>
+                <h3>Una tienda para la comunidad</h3>
+                <p>Al principio, fue solo un sueño en forma de tienda en línea. Pero rápidamente, nos dimos cuenta de que lo que hacíamos no era solo vender productos; estábamos creando un espacio donde los fans podían conectarse, compartir su amor por el anime y el manga, y descubrir cosas nuevas. Hoy en día, <strong>Akikaze</strong> no es solo una tienda, sino una comunidad de otakus apasionados que buscan lo mejor de este increíble mundo.</p>
+            </div>
+            <img src="{{ asset('images/Templo.png') }}" alt="Equipo Akikaze">
+        </div>
+
+        <p>En <strong>Akikaze</strong>, no solo te ofrecemos productos de calidad, sino que también queremos que sientas que eres parte de algo más grande. Queremos que cada vez que visites nuestra tienda, ya sea online o, en el futuro, en nuestra tienda física, te sientas como en casa, rodeado de gente que comparte tu amor por el anime, el manga y la cultura japonesa.</p>
+
+        <p>¡Gracias por ser parte de nuestra historia! Juntos, continuaremos explorando el infinito universo del anime y el manga. Porque en <strong>Akikaze</strong>, tu pasión es nuestra inspiración.</p>
+
+        <!-- Botón de acción -->
+        <a href="{{ path('app_productos') }}" class="action-btn">Descubre nuestros productos</a>
+    </div>
+</div>
+
+
+{% endblock %}

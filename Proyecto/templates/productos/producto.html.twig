@@ -1,37 +1,163 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="product-detail container">
-        <h1>{{ producto.name }}</h1>
-        <p>{{ producto.description }}</p>
-        <p>
-            Precio total:
-            <span id="product-price" data-base-price="{{ producto.price / 100 }}">
-                {{ (producto.price / 100) | number_format(2, '.', '') }}€
-            </span>
-        </p>
-        <p>Stock disponible: {{ producto.stock }}</p>
+<style>
+    .product-detail {
+        font-family: 'Roboto', sans-serif;
+        margin: 2em auto;
+        padding: 2em;
+        background: linear-gradient(to bottom right, #f8f9fa, #e0e7ff);
+        border-radius: 10px;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        max-width: 900px;
+    }
 
-        <!-- Galería de imágenes -->
-        <div class="product-gallery">
-            <a href="{{ asset('build/images/' ~ producto.imagenUrl) }}" data-lightbox="product-images">
-                <img src="{{ asset('uploads/images/' ~ producto.imagenUrl) }}" alt="{{ producto.name }}" width="300">
-            </a>
-        </div>
+    .product-detail h1 {
+        font-size: 2.5rem;
+        color: #ff6f61;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        margin-bottom: 1rem;
+    }
 
-        <!-- Cantidad ajustable -->
-        <div class="quantity-selector">
-            <button id="decrease-quantity">-</button>
-            <input type="number" id="product-quantity" value="1" min="1" max="{{ producto.stock }}">
-            <button id="increase-quantity">+</button>
-        </div>
+    .product-detail p {
+        font-size: 1.2rem;
+        color: #555;
+        margin-bottom: 1.5rem;
+    }
 
-        <!-- Añadir al carrito -->
-        <button id="add-to-cart" class="btn btn-primary" data-product-id="{{ producto.id }}">Añadir al carrito</button>
+    .product-gallery {
+        margin: 2em 0;
+    }
+
+    .product-gallery img {
+        width: 100%;
+        max-width: 400px;
+        border-radius: 10px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .product-gallery img:hover {
+        transform: scale(1.1);
+    }
+
+    .quantity-selector {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 1em 0;
+        gap: 0.5em;
+    }
+
+    .quantity-selector button {
+        background-color: #ffcc00;
+        color: #333;
+        font-size: 1.5rem;
+        border: none;
+        padding: 0.5em 1em;
+        border-radius: 5px;
+        cursor: pointer;
+        box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.15);
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .quantity-selector button:hover {
+        background-color: #e6b800;
+        transform: translateY(-2px);
+    }
+
+    .quantity-selector input {
+        width: 60px;
+        text-align: center;
+        font-size: 1.2rem;
+        padding: 0.3em;
+        border: 2px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .btn-primary {
+        background: #ff6f61;
+        color: white;
+        border: none;
+        padding: 0.8em 2em;
+        font-size: 1.2rem;
+        border-radius: 5px;
+        cursor: pointer;
+        text-transform: uppercase;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    .btn-primary:hover {
+        background: #e65b50;
+        transform: scale(1.05);
+    }
+
+    /* Sección de precio */
+    #product-price {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #ff6f61;
+    }
+
+    /* Animaciones */
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .product-detail {
+        animation: fadeIn 1s ease-in-out;
+    }
+</style>
+
+<div class="product-detail container">
+    <!-- Nombre del producto -->
+    <h1>{{ producto.name }}</h1>
+
+    <!-- Descripción -->
+    <p>{{ producto.description }}</p>
+
+    <!-- Precio -->
+    <p>
+        Precio total:
+        <span id="product-price" data-base-price="{{ producto.price / 100 }}">
+            {{ (producto.price / 100) | number_format(2, '.', '') }}€
+        </span>
+    </p>
+
+    <!-- Stock -->
+    <p>Stock disponible: {{ producto.stock }}</p>
+
+    <!-- Galería de imágenes -->
+    <div class="product-gallery">
+        <a href="{{ asset('uploads/images/' ~ producto.imagenUrl) }}" data-lightbox="product-images">
+            <img src="{{ asset('uploads/images/' ~ producto.imagenUrl) }}" alt="{{ producto.name }}">
+        </a>
     </div>
+
+    <!-- Selector de cantidad -->
+    <div class="quantity-selector">
+        <button id="decrease-quantity">-</button>
+        <input type="number" id="product-quantity" value="1" min="1" max="{{ producto.stock }}">
+        <button id="increase-quantity">+</button>
+    </div>
+
+    <!-- Botón añadir al carrito -->
+    <button id="add-to-cart" class="btn-primary" data-product-id="{{ producto.id }}">
+        Añadir al carrito
+    </button>
+</div>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('DetallesProducto') }} {# Incluye el archivo JS específico para esta página #}
+    {{ encore_entry_script_tags('DetallesProducto') }}
 {% endblock %}
