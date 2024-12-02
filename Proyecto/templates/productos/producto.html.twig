@@ -160,4 +160,27 @@
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('DetallesProducto') }}
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const addToCartButton = document.getElementById('add-to-cart');
+            const quantityInput = document.getElementById('product-quantity');
+            
+            addToCartButton.addEventListener('click', function () {
+                const quantity = parseInt(quantityInput.value, 10);  // Cantidad del producto
+                const productId = addToCartButton.getAttribute('data-product-id');  // ID del producto
+
+                // Enviar la solicitud a la ruta app_carrito_agregar
+                const url = `/carrito/agregar/${productId}`;
+                
+                fetch(url, {
+                    method: 'GET', // Método GET
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Opcional: Muestra un mensaje al usuario indicando que el producto fue añadido
+                    alert(`Producto añadido al carrito: ${data.productName}`);
+                })
+            });
+        });
+    </script>
 {% endblock %}

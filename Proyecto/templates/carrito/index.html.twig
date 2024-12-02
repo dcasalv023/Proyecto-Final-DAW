@@ -16,18 +16,24 @@
                     <th>Precio</th>
                     <th>Cantidad</th>
                     <th>Total</th>
+                    <th>Acción</th>
                 </tr>
             </thead>
             <tbody>
                 {% for item in carrito %}
                     <tr>
                         <td>
-                            <img src="{{ asset('build/images/' ~ item.producto.imagenUrl) }}" alt="{{ item.producto.name }}" style="width: 100px; height: auto;">
+                            <img src="{{ asset('uploads/images/' ~ item.producto.imagenUrl) }}" alt="{{ item.producto.name }}" style="width: 100px; height: auto;">
                         </td>
                         <td>{{ item.producto.name }}</td>
                         <td>{{ (item.producto.price / 100) | number_format(2, '.', '') }}€</td>
                         <td>{{ item.cantidad }}</td>
                         <td>{{ (item.producto.price * item.cantidad / 100) | number_format(2, '.', '') }}€</td>
+                        <td>
+                            <a href="{{ path('app_carrito_eliminar', {'id': item.producto.id}) }}" class="btn btn-danger" title="Eliminar producto">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>
@@ -37,7 +43,7 @@
             <h3>Total: {{ (totalCarrito / 100) | number_format(2, '.', '') }}€</h3>
         </div>
 
-        <a href="{{ path('checkout') }}" class="btn btn-primary">Tramitar pedido</a>
+        <a href="#" class="btn btn-primary">Tramitar pedido</a>
     {% endif %}
 
     {% if not usuarioAutenticado %}
