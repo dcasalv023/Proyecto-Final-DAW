@@ -5,7 +5,8 @@
     <h1>Mi Carrito</h1>
 
     {% if carrito|length == 0 %}
-        <p>No tienes productos en tu carrito.</p>
+        <p>No hay artículos en su carrito.</p>
+        <a href="{{ path('app_productos') }}" class="btn btn-secondary">Continuar comprando</a>
     {% else %}
         <table class="table">
             <thead>
@@ -31,11 +32,17 @@
                 {% endfor %}
             </tbody>
         </table>
+
+        <div class="total">
+            <h3>Total: {{ (totalCarrito / 100) | number_format(2, '.', '') }}€</h3>
+        </div>
+
+        <a href="{{ path('checkout') }}" class="btn btn-primary">Tramitar pedido</a>
     {% endif %}
 
     {% if not usuarioAutenticado %}
         <p>Debes iniciar sesión para completar tu compra.</p>
-        <a href="{{ path('app_login') }}" class="btn btn-primary">Iniciar Sesión</a>
+        <a href="{{ path('app_login') }}" class="btn btn-primary">Iniciar sesión</a>
     {% endif %}
 </div>
 {% endblock %}

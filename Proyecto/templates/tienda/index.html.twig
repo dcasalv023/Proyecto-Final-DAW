@@ -61,16 +61,28 @@
         overflow: hidden;
         text-align: center;
         box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        padding: 1em; /* Reduce el espacio interno */
+        max-width: 400px; /* Establece un ancho máximo */
+        margin: 0 auto; /* Centra el div */
     }
 
+    /* Estilo para el texto */
+    .discover-grid .card h3, 
+    .discover-grid .card p {
+        margin: 0.5em 0;
+        color: #444;
+    }
+
+    /* Estilo para la imagen */
     .discover-grid .card img {
         width: 100%;
         height: auto;
-    }
-
-    .discover-grid .card h3 {
-        margin: 0.5em 0;
-        color: #444;
+        max-width: 300px; /* Limita el tamaño máximo de la imagen */
+        margin-top: 1em; /* Añade un margen superior para separar la imagen del texto */
     }
 
     .discover-grid .card p {
@@ -107,12 +119,14 @@
     <h2>Descubriendo Akikaze</h2>
     <div class="discover-grid">
         <div class="card">
+            <!-- Primero el título y el párrafo -->
+            <h3>Nuestra Historia</h3>
+            <p>Conoce al equipo de Akikaze y nuestra historia.</p>
+            <!-- Luego la imagen debajo del texto -->
             <a href="{{ path('app_historia') }}">
                 <img src="{{ asset('images/Akikaze.png') }}" alt="Nuestra Historia">
-                <h3>Nuestra Historia</h3>
-                <p>Conoce al equipo de Akikaze y nuestra historia.</p>
             </a>
-            <!-- Botón debajo de la foto -->
+            <!-- Botón debajo de la imagen -->
             <a href="{{ path('app_historia') }}" class="btn-history">Nuestra Historia</a>
         </div>
     </div>
