@@ -10,60 +10,139 @@
         {{ encore_entry_link_tags('app') }}  <!-- Este es el CSS generado por Webpack -->
     {% endblock %}
     <link rel="stylesheet" href="{{ asset('css/nav.css') }}">  <!-- CSS personalizado -->
+    <!-- Cargando fuente de Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark">
-            <div class="container">
-                <!-- Logo -->
-                <a class="navbar-brand" href="{{ path('app_home') }}">
-                    <img src="{{ asset('build/images/logo.png') }}" alt="Logo" style="height: 80px;">
-                    <span class="ms-2" style="font-family: 'Comic Sans MS', cursive; font-size: 1.5rem;">Akikaze</span>
+<header>
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #FF4C00; padding: 15px 0;">
+        <div class="container">
+            <!-- Logo -->
+            <a class="navbar-brand d-flex align-items-center" href="{{ path('app_home') }}">
+                <img src="{{ asset('build/images/logo.png') }}" alt="Logo de Akikaze" style="width: 50px; height: 50px; border-radius: 50%;">
+                <span class="fw-bold text-white" style="font-family: 'Roboto', sans-serif; font-size: 1.5rem;">Akikaze</span>
+            </a>
+
+            <!-- Botón para menú móvil -->
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Enlaces de navegación -->
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link active text-white" href="{{ path('app_home') }}">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-white" href="{{ path('app_productos') }}">Productos</a>
+                    </li>
+                    {% if not app.user %}
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{{ path('app_login') }}">Iniciar Sesión</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{{ path('app_register') }}">Registrarse</a>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{{ path('app_perfil') }}">Mi Perfil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="{{ path('app_logout') }}">Cerrar Sesión</a>
+                        </li>
+                    {% endif %}
+                </ul>
+
+                <!-- Icono del carrito -->
+                <a href="{{ path('app_carrito') }}" class="btn btn-outline-light ms-3">
+                    <i class="fas fa-shopping-cart"></i> Carrito
                 </a>
-
-                <!-- Botón de menú en móvil -->
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <!-- Links de navegación -->
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_home') }}">Inicio</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_productos') }}">Productos</a>
-                        </li>
-                        {% if not app.user %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_login') }}">Iniciar Sesión</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_register') }}">Registrarse</a>
-                            </li>
-                        {% else %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_perfil') }}">Mi Perfil</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path('app_logout') }}">Cerrar Sesión</a>
-                            </li>
-                        {% endif %}
-                    </ul>
-
-                    <!-- Enlace del carrito -->
-                    <a class="nav-cart" href="{{ path('app_carrito') }}">
-                        <i class="fas fa-shopping-cart"></i> Carrito
-                    </a>
-                </div>
             </div>
-        </nav>
-    </header>
+        </div>
+    </nav>
+</header>
+
+
+
+
 
     {% block body %}
     <!-- El contenido de la página se colocará aquí -->
     {% endblock %}
+
+    <!-- Footer -->
+<footer style="background-color: #343a40; color: #f8f9fa;">
+    <div class="container py-5">
+        <div class="row">
+            <!-- Logo -->
+            <div class="col-md-3 mb-4">
+                <img src="{{ asset('build/images/logo.png') }}" alt="Akikaze Logo" style="width: 150px;">
+            </div>
+
+            <!-- Ayuda -->
+            <div class="col-md-3 mb-4">
+                <h5 class="text-light">Ayuda</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-light text-decoration-none">Pago a Plazos</a></li>
+                    <li><a href="#" class="text-light text-decoration-none">Envío gratis</a></li>
+                    <li><a href="#" class="text-light text-decoration-none">Formas de Pago</a></li>
+                    <li><a href="#" class="text-light text-decoration-none">Devoluciones</a></li>
+                </ul>
+            </div>
+
+            <!-- Información -->
+            <div class="col-md-3 mb-4">
+                <h5 class="text-light">Información</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-light text-decoration-none">Términos y Condiciones</a></li>
+                    <li><a href="#" class="text-light text-decoration-none">Aviso legal</a></li>
+                    <li><a href="#" class="text-light text-decoration-none">Política de Cookies</a></li>
+                    <li><a href="#" class="text-light text-decoration-none">Política de Privacidad</a></li>
+                </ul>
+            </div>
+
+            <!-- Contacto -->
+            <div class="col-md-3 mb-4">
+                <h5 class="text-light">Contacto</h5>
+                <p class="mb-1"><i class="fas fa-phone-alt me-2"></i>+34 601067063</p>
+                <p class="mb-1"><i class="fas fa-envelope me-2"></i>Akikaze@gmail.com</p>
+                <p><i class="fas fa-map-marker-alt me-2"></i>Escalinata Jerónimo Godínez s/n7, 11408 Santelmo, Andalucía, España</p>
+            </div>
+        </div>
+
+        <!-- Redes sociales y Métodos de pago -->
+        <div class="d-flex justify-content-between align-items-center">
+            <!-- Redes Sociales -->
+            <div>
+                <h5 class="text-light">Síguenos</h5>
+                <a href="#" class="text-light text-decoration-none me-3"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="text-light text-decoration-none me-3"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-light text-decoration-none me-3"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="text-light text-decoration-none me-3"><i class="fab fa-pinterest"></i></a>
+                <a href="#" class="text-light text-decoration-none me-3"><i class="fab fa-instagram"></i></a>
+            </div>
+
+            <!-- Métodos de pago -->
+            <div>
+                <h5 class="text-light">Métodos de pago</h5>
+                <i class="fab fa-cc-visa text-light fs-3 me-3"></i>
+                <i class="fab fa-cc-mastercard text-light fs-3 me-3"></i>
+                <i class="fab fa-cc-paypal text-light fs-3 me-3"></i>
+                <i class="fab fa-cc-amex text-light fs-3 me-3"></i>
+                <i class="fab fa-cc-discover text-light fs-3 me-3"></i>
+            </div>
+        </div>
+
+        <!-- Copyright -->
+        <div class="text-center mt-4">
+            <small class="text-light">
+                <i class="fas fa-copyright"></i> 2024 - Akikaze
+            </small>
+        </div>
+    </div>
+</footer>
+
 
     <!-- Scripts -->
     {% block javascripts %}

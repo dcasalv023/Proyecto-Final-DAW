@@ -1,85 +1,119 @@
-/* nav.css */
-
-/* Eliminar márgenes y agregar padding al body */
+/* Reinicio del body */
 body {
     margin: 0;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
+    background-color: #f0f0f0;
 }
 
 /* Barra de navegación */
 .navbar {
-    background-color: #808080; /* Fondo gris */
-    padding: 1rem 0; /* Espaciado vertical */
-    border-bottom: 2px solid black; /* Línea negra en la parte inferior */
+    background-color: #FF4C00; /* Color vibrante como un atardecer anime */
+    padding: 15px 0; /* Espaciado equilibrado */
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1); /* Sutil sombra */
+    border-bottom: 3px solid #FFD700; /* Línea dorada para dar un toque llamativo */
 }
 
 /* Contenedor principal */
 .navbar .container {
     display: flex;
-    justify-content: space-between; /* Espaciado entre logo y contenido */
+    justify-content: space-between;
     align-items: center;
-    width: 100%; /* Aseguramos que ocupe todo el ancho */
-    position: relative; /* Necesario para posicionar elementos */
+    width: 100%;
 }
 
 /* Menú de navegación */
 .navbar-nav {
     display: flex;
-    justify-content: flex-start; /* Alineación a la izquierda */
-    flex-grow: 1; /* El menú ocupa todo el espacio horizontal disponible */
-    margin: 0; /* Eliminar márgenes */
-    padding: 0; /* Sin relleno adicional */
-    list-style: none; /* Quitar viñetas */
+    justify-content: flex-end; /* Alineación a la derecha */
+    gap: 25px; /* Espaciado entre elementos */
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
 /* Elementos del menú */
 .navbar-nav .nav-item {
-    margin: 0; /* Sin márgenes */
-    padding: 0; /* Sin relleno */
+    position: relative;
 }
 
-/* Estilo de cada enlace */
+/* Enlaces del menú */
 .navbar-nav .nav-link {
-    color: white; /* Color de los enlaces */
-    font-size: 1.2rem; /* Tamaño de la fuente */
-    text-decoration: none; /* Quitar subrayado */
-    padding: 10px 20px; /* Espaciado interno */
-    transition: all 0.3s ease; /* Efecto suave al hacer hover */
-    border: 2px solid black; /* Bordes alrededor de cada enlace */
+    color: white;
+    font-size: 1.1rem;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 10px; /* Bordes redondeados */
+    font-family: 'Press Start 2P', cursive; /* Cambiar a fuente de estilo anime */
+    transition: all 0.3s ease-in-out;
 }
 
-/* Efecto hover para los enlaces */
-.navbar-nav .nav-link:hover {
-    color: #FFD700; /* Cambiar el color a dorado */
-    border-color: #FFD700; /* Cambiar color de los bordes a dorado */
+/* Efecto hover */
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+    color: #FFD700; /* Cambiar color a dorado */
+    background-color: rgba(255, 215, 0, 0.2); /* Fondo suave */
+    transform: scale(1.1); /* Efecto de ampliación al pasar el mouse */
 }
 
-/* Carrito de compras */
+/* Icono del carrito */
 .nav-cart {
-    color: white; /* Color del texto */
-    font-size: 1.2rem; /* Tamaño del texto */
-    text-decoration: none; /* Sin subrayado */
-    margin-left: auto; /* Empuja el carrito hacia la derecha */
-    padding: 10px 20px; /* Espaciado interno */
-    transition: color 0.3s ease; /* Efecto de color suave */
+    display: flex;
+    align-items: center;
+    color: white;
+    font-size: 1.4rem;
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 2px solid transparent;
+    border-radius: 5px;
+    transition: all 0.3s ease;
 }
 
-/* Hover para el carrito */
 .nav-cart:hover {
-    color: #FFD700; /* Cambiar a dorado en hover */
+    color: #FFD700;
+    border-color: #FFD700;
 }
 
 /* Logo */
 .navbar-brand img {
-    height: 60px; /* Tamaño del logo */
+    height: 50px; /* Tamaño del logo ajustado */
+    width: 50px;
+    margin-right: 10px;
+    border-radius: 50%; /* Logo redondeado */
+    border: 2px solid white; /* Borde blanco */
 }
 
-/* Menú colapsable en dispositivos móviles */
+/* Nombre de la tienda */
+.navbar-brand span {
+    color: #FFD700; /* Color dorado para resaltar el nombre */
+    font-size: 1.8rem; /* Tamaño de fuente aumentado */
+    font-family: 'Press Start 2P', cursive; /* Cambiar a fuente de estilo anime */
+}
+
+/* Menú colapsable (Responsive) */
 .navbar-toggler {
-    border-color: white; /* Borde blanco en el botón */
+    border: none; /* Sin borde */
+    color: white;
 }
 
 .navbar-toggler-icon {
-    background-color: white; /* Color blanco para el ícono */
+    background-color: white;
+    border-radius: 2px;
+    width: 25px;
+    height: 3px;
+    margin: 5px 0;
+    display: block;
+}
+
+/* Botón de sesión */
+.btn-outline-light {
+    color: white;
+    border-color: #FFD700;
+    font-family: 'Press Start 2P', cursive; /* Cambiar a fuente de estilo anime */
+}
+
+.btn-outline-light:hover {
+    background-color: #FFD700;
+    color: #333;
+    transform: scale(1.1); /* Efecto al pasar el mouse */
 }
