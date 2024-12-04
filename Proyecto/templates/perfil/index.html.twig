@@ -89,18 +89,25 @@
 </div>
 
 <div class="profile-container">
+    <!-- Imagen de perfil -->
     {% if app.user.imagePerfil %}
         <img src="{{ asset('uploads/images/' ~ app.user.imagePerfil) }}" alt="Foto de perfil" class="profile-image" />
     {% else %}
         <img src="{{ asset('images/FotoPorDefecto.png') }}" alt="Imagen predeterminada" class="profile-image" />
     {% endif %}
 
+    <!-- Información del usuario -->
     <h1>{{ app.user.name }}</h1>
     <p>Email: {{ app.user.email }}</p>
 
+    <!-- Acciones del perfil -->
     <div class="profile-actions">
         <button class="btn-primary" onclick="window.location.href='{{ path('edit_profile') }}'">Editar Perfil</button>
         <button class="btn-primary" onclick="window.location.href='{{ path('app_logout') }}'">Cerrar Sesión</button>
+        <form action="{{ path('delete_profile') }}" method="post" onsubmit="return confirm('¿Estás seguro de que deseas eliminar tu cuenta?');">
+    <button type="submit" class="btn btn-danger">Eliminar Cuenta</button>
+</form>
+
     </div>
 </div>
 {% endblock %}

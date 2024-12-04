@@ -1,0 +1,13 @@
+{# templates/error/acceso_denegado.html.twig #}
+{% extends 'base.html.twig' %}
+
+{% block title %}Acceso Denegado{% endblock %}
+
+{% block body %}
+    <div class="alert alert-danger" role="alert">
+        <h4 class="alert-heading">Acceso Denegado</h4>
+        <p>No tienes los permisos necesarios para acceder a esta página. Si crees que esto es un error, contacta con el administrador.</p>
+        <hr>
+        <p class="mb-0">Si deseas volver al inicio, puedes ir a la <a href="{{ path('app_home') }}">página principal</a>.</p>
+    </div>
+{% endblock %}

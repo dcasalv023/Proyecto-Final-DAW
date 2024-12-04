@@ -1,3 +1,0 @@
-easy_admin:
-    resource: '@EasyAdminBundle/Controller/'
-    prefix: /admin
