@@ -68,7 +68,7 @@
 
 <div class="edit-profile-container">
     <h1>Editar Perfil</h1>
-    {{ form_start(form) }}
+    {{ form_start(form, {'enctype': 'multipart/form-data'}) }}
         <div class="form-group">
             {{ form_label(form.name, 'Nombre') }}
             {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
@@ -76,6 +76,10 @@
         <div class="form-group">
             {{ form_label(form.email, 'Correo Electrónico') }}
             {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+        </div>
+        <div class="form-group">
+            {{ form_label(form.imagePerfil, 'Foto de Perfil') }}
+            {{ form_widget(form.imagePerfil, {'attr': {'class': 'form-control'}}) }}
         </div>
         {{ form_widget(form.save, {'attr': {'class': 'btn-primary'}}) }}
     {{ form_end(form) }}

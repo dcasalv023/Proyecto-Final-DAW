@@ -4,11 +4,14 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\UserProfileType;
 use App\Entity\Usuario;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
 class PerfilController extends AbstractController
 {
@@ -39,6 +42,25 @@ class PerfilController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('imagePerfil')->getData();
+            if ($imageFile) {
+                $filename = uniqid().'.'.$imageFile->guessExtension();
+
+                // Mover el archivo a un directorio de la aplicación
+                try {
+                    $imageFile->move(
+                        $this->getParameter('images_directory'), // Asegúrate de definir este parámetro en `services.yaml`
+                        $filename
+                    );
+                } catch (IOExceptionInterface $exception) {
+                    $this->addFlash('error', 'Hubo un error al guardar la imagen.');
+                }
+
+                // Establecer la ruta de la imagen en la entidad
+                $user->setImagePerfil($filename);
+            }
+
+            // Guardar cambios
             $em->persist($user);
             $em->flush();
 
