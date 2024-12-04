@@ -15,6 +15,8 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class RegistrationController extends AbstractController
 {
@@ -22,10 +24,10 @@ class RegistrationController extends AbstractController
     {
     }
 
+
     #[Route('/register', name: 'app_register')]
     public function register(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
-        // Redirige al perfil si el usuario ya está autenticado
         if ($this->getUser()) {
             return $this->redirectToRoute('app_perfil');
         }
@@ -35,6 +37,29 @@ class RegistrationController extends AbstractController
         $form->handleRequest($request);
     
         if ($form->isSubmitted() && $form->isValid()) {
+            // Subir la imagen
+            /** @var UploadedFile $imageFile */
+            $imageFile = $form->get('imagePerfil')->getData();
+            
+            if ($imageFile) {
+                // Generamos un nombre único para la imagen
+                $newFilename = uniqid() . '.' . $imageFile->guessExtension();
+    
+                try {
+                    // Mover el archivo a la carpeta de imágenes
+                    $imageFile->move(
+                        $this->getParameter('images_directory'), // Usamos el parámetro configurado
+                        $newFilename
+                    );
+                    // Guardamos el nombre de la imagen en la entidad
+                    $user->setImagePerfil($newFilename);
+                } catch (FileException $e) {
+                    // Manejar el error si ocurre algún problema al guardar la imagen
+                    $this->addFlash('error', 'Hubo un error al subir la imagen.');
+                }
+            }
+    
+            // Encriptar la contraseña
             $user->setPassword(
                 $userPasswordHasher->hashPassword(
                     $user,
@@ -45,6 +70,7 @@ class RegistrationController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
     
+            // Enviar correo de verificación
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
                 (new TemplatedEmail())
                     ->from(new Address('castillejousopersonal@gmail.com', 'Tienda Anime'))
@@ -60,6 +86,7 @@ class RegistrationController extends AbstractController
             'registrationForm' => $form,
         ]);
     }
+
     
 
 

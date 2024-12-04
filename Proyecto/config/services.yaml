@@ -7,6 +7,7 @@ parameters:
     # Puedes añadir parámetros personalizados aquí si los necesitas
     # Ejemplo:
     # some_parameter: 'value'
+        images_directory: '%kernel.project_dir%/public/uploads/images'
 
 services:
     # Default configuration for services in *this* file
