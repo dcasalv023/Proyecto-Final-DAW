@@ -22,12 +22,14 @@
     /* Contenedor del perfil */
     .profile-container {
         max-width: 800px;
+        width: 100%;
         padding: 2em;
         background: rgba(255, 255, 255, 0.9); /* Fondo blanco semitransparente */
         border-radius: 10px;
         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
         text-align: center;
         font-family: 'Roboto', sans-serif;
+        box-sizing: border-box;
     }
 
     .profile-container h1 {
@@ -105,6 +107,63 @@
     .btn-danger:hover {
         background: #e64545;
         transform: scale(1.05);
+    }
+
+    /* Media Queries para diseño responsive */
+    @media (max-width: 768px) {
+        .profile-container {
+            padding: 1.5em; /* Reducir padding para pantallas más pequeñas */
+        }
+
+        .profile-container h1 {
+            font-size: 2rem; /* Reducir el tamaño del título */
+        }
+
+        .profile-container h2 {
+            font-size: 1.5rem; /* Reducir el tamaño del subtítulo */
+        }
+
+        .profile-container p {
+            font-size: 1rem; /* Reducir el tamaño de la descripción */
+        }
+
+        .profile-image {
+            width: 120px; /* Reducir tamaño de la imagen */
+            height: 120px; /* Reducir tamaño de la imagen */
+        }
+
+        .btn-primary, .btn-danger {
+            padding: 0.7em 1.8em; /* Reducir el tamaño de los botones */
+            font-size: 0.9rem; /* Reducir el tamaño del texto en botones */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .profile-container {
+            padding: 1em; /* Reducir padding aún más */
+        }
+
+        .profile-container h1 {
+            font-size: 1.6rem; /* Reducir aún más el tamaño del título */
+        }
+
+        .profile-container h2 {
+            font-size: 1.3rem; /* Reducir aún más el tamaño del subtítulo */
+        }
+
+        .profile-container p {
+            font-size: 0.9rem; /* Reducir aún más el tamaño de la descripción */
+        }
+
+        .profile-image {
+            width: 100px; /* Reducir el tamaño de la imagen aún más */
+            height: 100px; /* Reducir el tamaño de la imagen aún más */
+        }
+
+        .btn-primary, .btn-danger {
+            padding: 0.6em 1.5em; /* Ajustar los botones */
+            font-size: 0.8rem; /* Ajustar el tamaño del texto en botones */
+        }
     }
 </style>
 

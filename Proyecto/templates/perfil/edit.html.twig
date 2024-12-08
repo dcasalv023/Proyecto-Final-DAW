@@ -4,6 +4,7 @@
 
 {% block body %}
 <style>
+    /* Contenedor principal */
     .edit-profile-container {
         max-width: 600px;
         margin: 2em auto;
@@ -12,8 +13,10 @@
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         font-family: 'Roboto', sans-serif;
+        box-sizing: border-box;
     }
 
+    /* Título */
     .edit-profile-container h1 {
         text-align: center;
         font-size: 2.5rem;
@@ -21,10 +24,12 @@
         color: #333;
     }
 
+    /* Grupos de formularios */
     .form-group {
         margin-bottom: 1.5rem;
     }
 
+    /* Etiquetas de los formularios */
     .form-group label {
         display: block;
         font-weight: bold;
@@ -32,12 +37,14 @@
         color: #555;
     }
 
+    /* Campos de los formularios */
     .form-group input {
         width: 100%;
         padding: 0.8em;
         border: 1px solid #ccc;
         border-radius: 5px;
         font-size: 1rem;
+        box-sizing: border-box;
     }
 
     .form-group input:focus {
@@ -46,6 +53,7 @@
         box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
     }
 
+    /* Botón primario */
     .btn-primary {
         display: block;
         width: 100%;
@@ -63,6 +71,48 @@
     .btn-primary:hover {
         background: #0056b3;
         transform: scale(1.02);
+    }
+
+    /* Media Queries para diseño responsive */
+    @media (max-width: 768px) {
+        .edit-profile-container {
+            padding: 1.5em;
+        }
+
+        .edit-profile-container h1 {
+            font-size: 2rem; /* Reduce el tamaño del título en pantallas pequeñas */
+        }
+
+        .form-group input {
+            padding: 0.7em; /* Reduce el padding de los inputs */
+            font-size: 0.9rem; /* Reduce el tamaño del texto en inputs */
+        }
+
+        .btn-primary {
+            font-size: 1rem; /* Ajusta el tamaño del botón */
+            padding: 0.7em; /* Reduce el padding del botón */
+        }
+    }
+
+    /* Media Queries para pantallas muy pequeñas (móviles en orientación vertical) */
+    @media (max-width: 480px) {
+        .edit-profile-container {
+            padding: 1em;
+        }
+
+        .edit-profile-container h1 {
+            font-size: 1.8rem; /* Reduce aún más el tamaño del título */
+        }
+
+        .form-group input {
+            padding: 0.6em; /* Reduce el padding de los inputs */
+            font-size: 0.85rem; /* Reduce aún más el tamaño del texto */
+        }
+
+        .btn-primary {
+            font-size: 0.9rem; /* Ajusta el tamaño del botón */
+            padding: 0.6em; /* Reduce el padding del botón */
+        }
     }
 </style>
 

@@ -138,5 +138,56 @@
 
 {% block javascripts %}
 {{ parent() }}
-<script src="{{ asset('assets/js/price-range.js') }}"></script>
+<script src="{{ asset('build/js/price-range.js') }}"></script>
+{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        /* Media Queries para diseño responsive */
+        @media (max-width: 768px) {
+            .col-md-3, .col-md-9 {
+                width: 100%; /* En pantallas más pequeñas, las columnas ocuparán el 100% */
+            }
+
+            .filter-sidebar {
+                margin-bottom: 20px; /* Separar los filtros de otros elementos */
+            }
+
+            .carousel-inner {
+                display: block; /* El carrusel se verá mejor en pantallas pequeñas */
+            }
+
+            .carousel-item {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .carousel-controls {
+                display: none; /* Ocultar controles del carrusel en pantallas pequeñas */
+            }
+
+            .carousel-item img {
+                max-height: 150px; /* Reducir la altura de las imágenes en el carrusel */
+            }
+        }
+
+        @media (max-width: 576px) {
+            .filter-sidebar {
+                padding: 15px; /* Reducir padding en dispositivos muy pequeños */
+            }
+
+            .carousel-item img {
+                max-height: 120px; /* Imágenes aún más pequeñas en móviles */
+            }
+
+            .btn-info {
+                font-size: 0.8rem; /* Reducir el tamaño de los botones */
+            }
+
+            .page-title {
+                font-size: 1.5rem; /* Reducir el tamaño del título */
+            }
+        }
+    </style>
 {% endblock %}
