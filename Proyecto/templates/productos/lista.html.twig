@@ -1,10 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-
     <link rel="stylesheet" href="{{ asset('build/css/carousel.css') }}">
-
->>>>>>> 7490de9 (lista)
 {% endblock %}
 
 {% block body %}
@@ -15,19 +12,6 @@
             <form method="get" action="{{ path('app_productos') }}">
                 <div class="filter-sidebar card p-3 shadow-sm">
                     <h5 class="card-title text-center">Filtros</h5>
-
-                    <!-- Filtro de Ofertas -->
-                    <div class="form-check">
-                        <input 
-                            class="form-check-input" 
-                            type="checkbox" 
-                            name="ofertas" 
-                            id="ofertas" 
-                            {% if app.request.get('ofertas') %}checked{% endif %}>
-                        <label class="form-check-label" for="ofertas">
-                            Ofertas
-                        </label>
-                    </div>
 
                     <!-- Filtro de Precio -->
                     <div class="form-group mt-3">
@@ -82,7 +66,7 @@
                 </ul>
             </div>
 
-        <!-- Banner promocional  -->
+            <!-- Banner promocional -->
             <div class="mt-4">
                 <div class="card shadow-sm">
                     <img src="{{ asset('images/Banner.png') }}" class="card-img-top" alt="Promoción especial">

@@ -25,7 +25,6 @@ class ProductosController extends AbstractController
         // Obtén los parámetros de filtro
         $categoriaId = $request->query->get('categoria'); // Parámetro para categoría seleccionada
         $precio = $request->query->get('precio'); // Parámetro para rango de precio
-        $ofertas = $request->query->get('ofertas'); // Parámetro para filtrar por ofertas
         $buscar = $request->query->get('buscar'); // Parámetro de búsqueda por nombre
 
         // Obtener todas las categorías
@@ -41,12 +40,6 @@ class ProductosController extends AbstractController
         if ($categoriaId) {
             $queryBuilder->andWhere('p.categoria = :categoria')
                          ->setParameter('categoria', $categoriaId);
-        }
-
-        // Filtrar por ofertas si aplica
-        if ($ofertas) {
-            $queryBuilder->andWhere('p.oferta = :oferta')
-                         ->setParameter('oferta', true);
         }
 
         // Filtrar por búsqueda de nombre si aplica
@@ -86,11 +79,6 @@ class ProductosController extends AbstractController
                                  ->setParameter('precio', $precio * 100); // Convertir a centavos
                 }
 
-                if ($ofertas) {
-                    $queryBuilder->andWhere('p.oferta = :oferta')
-                                 ->setParameter('oferta', true);
-                }
-
                 if ($buscar) {
                     $queryBuilder->andWhere('p.name LIKE :buscar')
                                  ->setParameter('buscar', '%' . $buscar . '%');
@@ -108,11 +96,6 @@ class ProductosController extends AbstractController
                 if ($precio) {
                     $queryBuilder->andWhere('p.price <= :precio')
                                  ->setParameter('precio', $precio * 100);
-                }
-
-                if ($ofertas) {
-                    $queryBuilder->andWhere('p.oferta = :oferta')
-                                 ->setParameter('oferta', true);
                 }
 
                 if ($buscar) {
